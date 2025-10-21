@@ -4,10 +4,8 @@ title = 'My New Hugo Site'
 
 defaultContentLanguage = "en"
 
-[author]
-  name = "Carlos Escorcia"
-
 [params]
+  name = "Carlos Escorcia"
   user = "carlos"
   hostName = "escorcia21.dev"
   github = "https://github.com/escorcia21"
