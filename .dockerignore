@@ -1,0 +1,12 @@
+.devcontainer/
+.git/
+.gitignore
+.vscode/
+Dockerfile
+README.md
+compose.yaml
+node_modules/
+dist/
+.DS_Store
+public/
+.prettier

@@ -1,0 +1,41 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+
+defaultContentLanguage = "en"
+
+[author]
+  name = "Carlos Escorcia"
+
+[params]
+  user = "carlos"
+  hostName = "escorcia21.dev"
+  github = "https://github.com/escorcia21"
+
+[menu]
+  [[menu.header]]
+    name = "blog"
+    weight = 0
+    url = "blog"
+  [[menu.header]]
+    name = "about"
+    weight = 1
+    url = "about"
+
+[build]
+  [build.buildStats]
+    enable = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+[module]
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'

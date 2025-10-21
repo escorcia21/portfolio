@@ -1,0 +1,41 @@
+<header
+  class="overflow-auto box-border bg-primary-dark flex justify-center shrink-0"
+>
+  <div class="font-mono px-20 h-18 flex justify-between items-center w-full">
+    <div>
+      <a
+        class="no-underline hover:no-underline"
+        href="{{ .Site.BaseURL | relLangURL }}"
+      >
+        <span>{{ .Site.Params.user }}@{{ .Site.Params.hostname }} ~ $</span>
+      </a>
+    </div>
+    <input type="checkbox" id="menu-toggle" class="hidden peer" />
+    <label
+      for="menu-toggle"
+      class="group md:hidden inline-flex w-12 h-12 text-white text-center items-center justify-center rounded transition hover:cursor-pointer"
+    >
+      <span class="sr-only">Menu</span>
+      {{ partial "header/burger.html" . }}
+    </label>
+    <nav
+      class="w-full md:w-auto h-full md:h-auto fixed md:items-center md:justify-end top-18 left-0 flex overflow-hidden bg-primary md:bg-transparent items-center justify-center max-h-0 transition-[max-height] duration-500 ease-out peer-checked:max-h-full md:max-h-none"
+    >
+      <ul
+        class="md:p-0 md:m-0 flex flex-col md:flex-row items-center justify-center list-none"
+      >
+        {{ range .Site.Menus.header }}
+          <li class="m-1 inline">
+            <a
+              class="no-underline"
+              href="{{ .URL | absLangURL }}"
+              title="{{ .Title }}"
+            >
+              ~/{{- .Name -}}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </nav>
+  </div>
+</header>

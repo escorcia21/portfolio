@@ -1,0 +1,18 @@
+{
+	"name": "Personal Portfolio",
+	"dockerComposeFile": "../compose.yaml",
+	"service": "hugo",
+	"workspaceFolder": "/portfolio",
+	"shutdownAction": "stopCompose",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				"budparr.language-hugo-vscode",
+				"esbenp.prettier-vscode",
+				"kaellarkin.hugo-shortcode-syntax",
+				"bradlc.vscode-tailwindcss"
+			]
+		}
+	}
+}

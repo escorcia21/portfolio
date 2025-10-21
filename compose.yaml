@@ -1,0 +1,17 @@
+services:
+  hugo:
+    container_name: "hugo"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/portfolio
+    tty: true
+    develop:
+      watch:
+        - action: rebuild
+          path: /
+          target: /portfolio
+
