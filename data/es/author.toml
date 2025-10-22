@@ -1,7 +1,8 @@
 [author]
 name = "Carlos Escorcia"
+avatar = "avatar.jpg"
 location = "Barranquilla, Colombia"
 github = "https://github.com/escorcia21"
 email = "carlosescorcia21@hotmail.com"
 linkedin = "https://www.linkedin.com/in/escorcia26/"
-description = "Ingeniero full-stack con más de 3 años de experiencia en el diseño, desarrollo y despliegue de aplicaciones móviles de alto rendimiento. Especializado en desarrollo Android (Kotlin, Jetpack Compose) e iOS (Swift), con experiencia práctica en AWS, MySQL y pipelines CI/CD. Apasionado por crear soluciones móviles escalables, seguras y centradas en el usuario que generen un impacto real en el negocio."
+description = "Ingeniero full-stack con más de 3 años de experiencia desarrollando aplicaciones móviles de alto rendimiento. Experto en Android (Kotlin, Jetpack Compose) e iOS (Swift), con sólidos conocimientos en AWS, MySQL y CI/CD. Apasionado por crear soluciones escalables, seguras y centradas en el usuario que generen un impacto real."

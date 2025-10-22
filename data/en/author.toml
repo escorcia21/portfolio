@@ -1,7 +1,8 @@
 [author]
 name = "Carlos Escorcia"
+avatar = "avatar.jpg"
 location = "Barranquilla, Colombia"
 github = "https://github.com/escorcia21"
 email = "carlosescorcia21@hotmail.com"
 linkedin = "https://www.linkedin.com/in/escorcia26/"
-description = "Full-stack engineer with 3+ years of experience designing, building, and deploying high-performance mobile applications. Skilled in Android (Kotlin, Jetpack Compose) and iOS (Swift) development, with hands-on expertise in AWS, MySQL, and CI/CD pipelines. Passionate about delivering scalable, secure, and user-centric mobile solutions that drive real business impact."
+description = "Full-stack engineer with 3+ years of experience building high-performance mobile apps. Skilled in Android (Kotlin, Jetpack Compose) and iOS (Swift), with strong knowledge of AWS, MySQL, and CI/CD. Passionate about creating scalable, secure, and user-focused solutions"

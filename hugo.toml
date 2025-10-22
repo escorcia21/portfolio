@@ -1,6 +1,5 @@
 baseURL = 'https://carlosdev.co/'
 title = 'Carlos Escorcia'
-
 defaultContentLanguage = "en"
 
 [params]

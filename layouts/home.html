@@ -7,68 +7,90 @@
     {{ with $author }}
       <section class="mb-16">
         <div
-          class="max-w-3xl ml-0 p-6 border-2 border-gray-500/20 rounded-xl shadow-xl relative 
-                 transform transition-all duration-300 hover:shadow-2xl hover:border-border-hover-accent"
+          class="flex flex-col md:flex-row items-center justify-between gap-8"
         >
-          <div class="text-left relative z-10">
-            <h1
-              class="text-4xl md:text-5xl font-bold mb-4 text-white 
-                       transform transition-all duration-300 hover:text-font-accent
-                       tracking-tight"
-            >
-              {{ .name }}
-            </h1>
-            <p
-              class="text-font-light mb-4 flex items-center text-xl gap-2 
-                      transform transition-all duration-300 hover:text-white"
-            >
-              {{ $locationSvg := resources.Get "icons/location.svg" | resources.ExecuteAsTemplate "location.svg" . }}
-              {{ $locationSvg.Content | safeHTML }}
-              <span class="font-mono">{{ .location }}</span>
-            </p>
-            <p
-              class="text-lg leading-relaxed mb-6 text-font-light
-                      transform transition-all duration-300 hover:text-white"
-            >
-              {{ .description }}
-            </p>
-          </div>
-
-          <!-- Social Icons with enhanced animations -->
+          <!-- Profile Picture -->
+          {{ with .avatar }}
+            <div class="shrink-0 size-38 md:size-54">
+              <div
+                class="w-full h-full rounded-full border-4 border-gray-500/20 overflow-hidden
+                        shadow-lg transition-all duration-300 hover:border-border-hover-accent
+                        hover:shadow-xl group bg-primary-dark"
+              >
+                <img
+                  src="/images/{{ . }}"
+                  alt="{{ $author.name }}'s profile picture"
+                  class="w-full h-full object-cover transition-transform duration-500
+                       group-hover:scale-110"
+                />
+              </div>
+            </div>
+          {{ end }}
+          <!-- Author Info Card -->
           <div
-            class="mt-8 md:mt-0 flex flex-wrap justify-center gap-4 relative z-20
-                      md:absolute md:top-6 md:right-6 md:flex-nowrap md:justify-end"
+            class="w-full md:w-2/3 p-6 border-2 border-gray-500/20 rounded-xl shadow-xl relative 
+                   transform transition-all duration-300 hover:shadow-2xl hover:border-border-hover-accent"
           >
-            {{ with .email }}
-              {{ $emailSvg := resources.Get "icons/email.svg" | resources.ExecuteAsTemplate "email.svg" . }}
-              {{ partial "components/animated-icon-button" (dict
-                "href" (printf "mailto:%s" .)
-                "icon" $emailSvg.Content
-                )
-              }}
-            {{ end }}
+            <div class="text-left relative z-10">
+              <h1
+                class="text-4xl md:text-5xl font-bold mb-4 text-white 
+                         transform transition-all duration-300 hover:text-font-accent
+                         tracking-tight"
+              >
+                {{ .name }}
+              </h1>
+              <p
+                class="text-font-light mb-4 flex items-center text-xl gap-2 
+                      transform transition-all duration-300 hover:text-white"
+              >
+                {{ $locationSvg := resources.Get "icons/location.svg" | resources.ExecuteAsTemplate "location.svg" . }}
+                {{ $locationSvg.Content | safeHTML }}
+                <span class="font-mono">{{ .location }}</span>
+              </p>
+              <p
+                class="text-lg leading-relaxed mb-6 text-font-light
+                      transform transition-all duration-300 hover:text-white"
+              >
+                {{ .description }}
+              </p>
+            </div>
 
-            {{ with .github }}
-              {{ $githubSvg := resources.Get "icons/github.svg" | resources.ExecuteAsTemplate "github.svg" . }}
-              {{ partial "components/animated-icon-button" (dict
-                "href" .
-                "icon" $githubSvg.Content
-                "target" "_blank"
-                "rel" "noopener noreferrer"
-                )
-              }}
-            {{ end }}
+            <!-- Social Icons with enhanced animations -->
+            <div
+              class="mt-8 md:mt-0 flex flex-wrap justify-center gap-4 relative z-20
+                      md:absolute md:top-6 md:right-6 md:flex-nowrap md:justify-end"
+            >
+              {{ with .email }}
+                {{ $emailSvg := resources.Get "icons/email.svg" | resources.ExecuteAsTemplate "email.svg" . }}
+                {{ partial "components/animated-icon-button" (dict
+                  "href" (printf "mailto:%s" .)
+                  "icon" $emailSvg.Content
+                  )
+                }}
+              {{ end }}
 
-            {{ with .linkedin }}
-              {{ $linkedinSvg := resources.Get "icons/linkedin.svg" | resources.ExecuteAsTemplate "linkedin.svg" . }}
-              {{ partial "components/animated-icon-button" (dict
-                "href" .
-                "icon" $linkedinSvg.Content
-                "target" "_blank"
-                "rel" "noopener noreferrer"
-                )
-              }}
-            {{ end }}
+              {{ with .github }}
+                {{ $githubSvg := resources.Get "icons/github.svg" | resources.ExecuteAsTemplate "github.svg" . }}
+                {{ partial "components/animated-icon-button" (dict
+                  "href" .
+                  "icon" $githubSvg.Content
+                  "target" "_blank"
+                  "rel" "noopener noreferrer"
+                  )
+                }}
+              {{ end }}
+
+              {{ with .linkedin }}
+                {{ $linkedinSvg := resources.Get "icons/linkedin.svg" | resources.ExecuteAsTemplate "linkedin.svg" . }}
+                {{ partial "components/animated-icon-button" (dict
+                  "href" .
+                  "icon" $linkedinSvg.Content
+                  "target" "_blank"
+                  "rel" "noopener noreferrer"
+                  )
+                }}
+              {{ end }}
+            </div>
           </div>
         </div>
       </section>

@@ -4,9 +4,6 @@ other = "What I work with"
 [experienceTitle]
 other = "Experience"
 
-[projectsTitle]
-other = "Projects"
-
 [blogsTitle]
 other = "Blogs"
 
@@ -15,12 +12,6 @@ other = "View All"
 
 [localTimeLabel]
 other = "Local Time:"
-
-[menuTitle]
-other = "Menu"
-
-[learnMore]
-other = "Learn More"
 
 [builtUsing]
 other = "Built using"
