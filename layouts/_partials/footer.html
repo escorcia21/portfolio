@@ -1,16 +1,14 @@
 <!-- Footer -->
-<div
-  class="flex flex-col items-center justify-center gap-2 py-8 font-mono bg-linear-to-b to-primary-dark"
->
+<div class="flex flex-col items-center justify-center gap-2 py-8 font-mono">
   {{ $authorData := index site.Data .Language.Lang "author" }}
   {{ $author := cond (and $authorData $authorData.author) $authorData.author site.Params }}
   {{ with $author }}
-    <p class="text-text-secondary-light text-xm ">
+    <p>
       ©
       {{ now.Format "2006" }}
       {{ .name }}
     </p>
-    <p class="text-text-secondary-light text-xm">
+    <p>
       {{ T "builtUsing" }}
       <a href="https://gohugo.io/" target="_blank" class="animated-link">Hugo</a
       >.

@@ -1,0 +1,16 @@
+[[experience]]
+company = "AIM Edge Apps"
+role = "Desarrollador Full Stack"
+period = "Nov 2022 - Presente"
+location = "Barranquilla, Colombia"
+logo = "/images/company/aimedge.png"
+company_link = "https://aimedgelatam.com/"
+description = "Desarrollo y mantenimiento de sistemas móviles y backend para productos digitales escalables y de alto rendimiento."
+responsibilities = [
+    "Desarrollo de apps nativas iOS y Android con Swift, Kotlin, MVVM y Jetpack Compose.",
+    "Implementación de pagos seguros y funciones avanzadas como mapas y carga de medios.",
+    "Optimización de rendimiento con Xcode Instruments y Android Profiler.",
+    "Gestión del ciclo completo de publicación y pipelines CI/CD (Bitrise, Xcode Cloud).",
+    "Diseño y mantenimiento de infraestructura en AWS y backend en Ruby on Rails.",
+    "Comunicación directa con clientes y presentación de avances técnicos en inglés."
+]

@@ -7,13 +7,13 @@
     {{ partial "head.html" . }}
   </head>
   <body class="flex flex-col min-h-screen bg-primary text-white">
-    <header class="shrink-0">
+    <header class="shrink-0  bg-linear-to-t to-primary-dark ">
       {{ partial "header.html" . }}
     </header>
     <main class="flex-1 shrink-0">
       {{ block "main" . }}{{ end }}
     </main>
-    <footer class="shrink-0 ">
+    <footer class="shrink-0 bg-linear-to-b to-primary-dark">
       {{ partial "footer.html" . }}
     </footer>
   </body>

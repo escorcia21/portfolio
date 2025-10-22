@@ -1,0 +1,25 @@
+{{ $arrowSvg := resources.Get "icons/arrow-up-right.svg" | resources.ExecuteAsTemplate "arrow-up-right.svg" . }}
+<a
+  href="{{ .href }}"
+  {{ with .target | default "_blank" }}target="{{ . }}"{{ end }}
+  {{ with .rel | default "noopener noreferrer" }}rel="{{ . }}"{{ end }}
+  class="group inline-flex items-center gap-2 font-medium 
+         transition-colors duration-300 hover:text-font-accent
+         {{ with .class }}{{ . }}{{ end }}"
+>
+  <!-- Text with underline effect -->
+  <span class="relative">
+    {{ .text }}
+    <span
+      class="absolute -bottom-0.5 left-0 w-full h-px bg-font-accent transform origin-left 
+             scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
+    ></span>
+  </span>
+  <!-- Arrow with separate animation -->
+  <span
+    class="transition-transform duration-300 will-change-transform
+           group-hover:translate-x-1 group-hover:-translate-y-1"
+  >
+    {{ $arrowSvg.Content | safeHTML }}
+  </span>
+</a>

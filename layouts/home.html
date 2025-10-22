@@ -7,7 +7,7 @@
     {{ with $author }}
       <section class="mb-16">
         <div
-          class="max-w-3xl ml-0 p-6 border-2 border-border-primary rounded-xl shadow-xl relative 
+          class="max-w-3xl ml-0 p-6 border-2 border-gray-500/20 rounded-xl shadow-xl relative 
                  transform transition-all duration-300 hover:shadow-2xl hover:border-border-hover-accent"
         >
           <div class="text-left relative z-10">
@@ -79,40 +79,51 @@
 
     <!-- Technologies Section -->
     <section class="mb-10 font-mono font-bold">
-      <h2 class="text-4xl mb-2 relative">{{ T "whatIWorkWith" }}</h2>
-      <div class="tech-carousel">
-        <div class="carousel-container">
-          <div class="carousel-track carousel-track-left-to-right">
-            {{ range .Site.Data.technologies.technologies }}
-              <div class="carousel-item">
-                {{ if .svg }}
-                  {{ $svg := resources.Get (printf "icons/%s" .path) | resources.ExecuteAsTemplate .path . }}
-                  {{ $svg.Content | safeHTML }}
-                {{ else }}
-                  <i class="{{ .icon }}"></i>
-                {{ end }}
-                <span class="text-xl"> {{ .name }}</span>
-              </div>
-            {{ end }}
-          </div>
+      <h2 class="text-4xl mb-4 relative">{{ T "whatIWorkWith" }}</h2>
+
+      <!-- First carousel -->
+      <div
+        class="overflow-hidden w-full mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+      >
+        <div
+          class="flex animate-scroll-left hover:[animation-play-state:paused] w-max"
+        >
+          {{ range .Site.Data.technologies.technologies }}
+            <div
+              class="flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg"
+            >
+              {{ if .svg }}
+                {{ $svg := resources.Get (printf "icons/%s" .path) | resources.ExecuteAsTemplate .path . }}
+                {{ $svg.Content | safeHTML }}
+              {{ else }}
+                <i class="{{ .icon }} text-3xl"></i>
+              {{ end }}
+              <span class="text-lg font-medium">{{ .name }}</span>
+            </div>
+          {{ end }}
         </div>
       </div>
 
-      <div class="tech-carousel">
-        <div class="carousel-container">
-          <div class="carousel-track-reverse">
-            {{ range .Site.Data.tools.tools }}
-              <div class="carousel-item">
-                {{ if .svg }}
-                  {{ $svg := resources.Get (printf "icons/%s" .path) | resources.ExecuteAsTemplate .path . }}
-                  {{ $svg.Content | safeHTML }}
-                {{ else }}
-                  <i class="{{ .icon }}"></i>
-                {{ end }}
-                <span class="text-xl">{{ .name }}</span>
-              </div>
-            {{ end }}
-          </div>
+      <!-- Second carousel -->
+      <div
+        class="overflow-hidden w-full mt-4 mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+      >
+        <div
+          class="flex animate-scroll-right hover:[animation-play-state:paused] w-max"
+        >
+          {{ range .Site.Data.tools.tools }}
+            <div
+              class="flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg"
+            >
+              {{ if .svg }}
+                {{ $svg := resources.Get (printf "icons/%s" .path) | resources.ExecuteAsTemplate .path . }}
+                {{ $svg.Content | safeHTML }}
+              {{ else }}
+                <i class="{{ .icon }} text-3xl"></i>
+              {{ end }}
+              <span class="text-lg font-medium">{{ .name }}</span>
+            </div>
+          {{ end }}
         </div>
       </div>
     </section>
@@ -124,54 +135,96 @@
     {{ with $experience }}
       <section>
         <h2 class="text-4xl font-bold mb-5">{{ T "experienceTitle" }}</h2>
-        <div class="space-y-4 max-w-3xl mx-auto">
+        <div class="space-y-8 max-w-3xl mx-auto">
           {{ range $index, $exp := . }}
-            <div
-              class="relative pl-8 before:content-[''] before:absolute before:left-0 before:top-0 before:w-[2px] before:h-full before:bg-gray-700 before:rounded-full"
-            >
-              {{ if eq .company "Open Source Contributor" }}
+            <div class="relative pl-10 group/exp">
+              <!-- Timeline bar with subtle initial state -->
+              <div
+                class="absolute left-0 top-0 w-[4px] h-full bg-gray-500/20
+                          before:absolute before:inset-0 before:bg-linear-to-b 
+                          before:from-font-accent/0 before:via-font-accent/40 before:to-font-accent/0
+                          before:opacity-0 before:transition-all before:duration-500
+                          group-hover/exp:before:opacity-100"
+              >
+                <!-- Minimal glow effect -->
+              </div>
+
+              <!-- Animated connector line -->
+              <div
+                class="absolute left-[2px] top-[18px] w-[14px] h-[4px] 
+                          bg-gray-500/20 origin-left
+                          before:absolute before:inset-0 before:bg-linear-to-r 
+                          before:from-font-accent before:to-transparent
+                          before:-translate-x-full before:opacity-0 
+                          before:transition-all before:duration-500
+                          group-hover/exp:before:translate-x-0 
+                          group-hover/exp:before:opacity-100"
+              ></div>
+
+              <div
+                class="absolute -left-[6px] top-[12px] flex items-center justify-center"
+              >
+                <!-- Main dot -->
                 <div
-                  class="absolute -left-1.5 top-0 w-3 h-3 bg-[#121212] border border-blue-400 rounded-full"
+                  class="relative w-4 h-4 rounded-full 
+                             border-2 border-gray-500/40 bg-primary-dark
+                             before:absolute before:inset-[2px] before:rounded-full 
+                             before:bg-linear-to-br before:from-gray-500/20 before:to-transparent
+                             after:absolute after:inset-[-2px] after:rounded-full after:border
+                             after:border-font-accent/30 after:scale-0 after:opacity-0
+                             after:transition-all after:duration-500
+                             transition-all duration-300 ease-out
+                             group-hover/exp:border-font-accent 
+                             group-hover/exp:after:scale-100 
+                             group-hover/exp:after:opacity-100"
                 ></div>
-              {{ else }}
-                <div
-                  class="absolute -left-1.5 top-0 w-2 h-2 bg-gray-700 rounded-full"
-                ></div>
-              {{ end }}
-              <div class="text-gray-400 text-xl mb-1">
-                {{ if .company_link }}
-                  <a
-                    href="{{ .company_link }}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group inline-flex items-center gap-2 font-medium hover:text-accent-light  transition-colors duration-200"
-                  >
+              </div>
+
+              <!-- Content -->
+              <div class="space-y-2">
+                <!-- Company -->
+                <div class="text-font-light text-xl">
+                  {{ if .company_link }}
+                    {{ partial "components/link-with-arrow" (dict
+                      "href" .company_link
+                      "text" .company
+                      )
+                    }}
+                  {{ else }}
                     {{ .company }}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="opacity-70 group-hover:opacity-100 transition-opacity duration-200"
+                  {{ end }}
+                </div>
+
+                <!-- Role & Period -->
+                <div class="space-y-1">
+                  <h3 class="text-2xl font-semibold text-white">{{ .role }}</h3>
+                  <p class="text-font-light font-medium">{{ .period }}</p>
+                  {{ if .country }}
+                    <p class="text-font-light text-sm">{{ .country }}</p>
+                  {{ end }}
+                </div>
+
+                <!-- Description -->
+                <p class="text-font-light leading-relaxed">
+                  {{ .description }}
+                </p>
+
+                <!-- Responsibilities -->
+                {{ if .responsibilities }}
+                  <div class="mt-4 pt-4 border-t border-border-primary/20">
+                    <h4 class="text-white font-medium mb-2">
+                      Key Responsibilities:
+                    </h4>
+                    <ul
+                      class="list-disc list-inside space-y-1 text-font-light marker:text-font-accent"
                     >
-                      <path d="M7 17l9.2-9.2M17 17V7H7" />
-                    </svg>
-                  </a>
-                {{ else }}
-                  {{ .company }}
+                      {{ range .responsibilities }}
+                        <li class="pl-2">{{ . }}</li>
+                      {{ end }}
+                    </ul>
+                  </div>
                 {{ end }}
               </div>
-              <p class="text-2xl font-semibold">{{ .role }}</p>
-              <p class="text-gray-400 font-semibold">{{ .period }}</p>
-              <p class="text-gray-400 text-sm">
-                {{ if .country }}{{ .country }}{{ end }}
-              </p>
-              <p class="mt-2">{{ .description }}</p>
             </div>
           {{ end }}
         </div>
@@ -185,269 +238,40 @@
     {{ $projectsData := index site.Data .Language.Lang "projects" }}
     {{ $projects := cond (and $projectsData $projectsData.projects) $projectsData.projects site.Params.projects }}
 
-    {{ with $projects }}
-      <section class="mt-12 md:mt-20 mb-12 md:mb-20">
-        <div class="flex justify-between items-center mb-6 md:mb-8">
-          <h2 class="text-2xl md:text-4xl font-bold">
-            {{ T "projectsTitle" }}
-          </h2>
+
+    <!-- Blog Section -->
+    {{ $blogsData := index site.Data .Language.Lang "blogs" }}
+    {{ $blogs := cond (and $blogsData $blogsData.blogs) $blogsData.blogs site.Params.blogs }}
+
+    {{ with $blogs }}
+      <section class="mt-20 mb-20">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-4xl font-bold">{{ T "blogsTitle" }}</h2>
         </div>
-        <div class="grid grid-cols-1 gap-6 md:gap-8 max-w-3xl mx-auto">
-          {{ range first 2 . }}
-            <div
-              class="project-card relative overflow-hidden rounded-lg bg-[#121212] border border-gray-700 transition-all duration-300 group"
-            >
-              <div class="aspect-w-16 aspect-h-9 overflow-hidden relative">
-                <div
-                  class="absolute inset-0 bg-linear-to-br from-blue-500/20 to-purple-500/20 z-10"
-                ></div>
-                <img
-                  src="{{ .image }}"
-                  alt="{{ .title }}"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div
-                  class="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent opacity-60 z-20"
-                ></div>
-
-                <!-- Content that moves up on hover -->
-                <div
-                  class="absolute inset-0 z-30 p-4 pb-3 md:p-6 md:pb-4 flex flex-col justify-end transform transition-transform duration-500 translate-y-0 group-hover:translate-y-[-20px]"
-                >
-                  <h3
-                    class="text-xl md:text-2xl font-bold mb-1.5 md:mb-2 text-white line-clamp-2"
-                  >
-                    {{ .title }}
-                  </h3>
-                  <div
-                    class="hidden sm:flex flex-wrap gap-1 md:gap-2 mb-1.5 md:mb-3"
-                  >
-                    {{ $techs := split .tech "," }}
-                    {{ range $tech := $techs }}
-                      <span
-                        class="px-1.5 md:px-2 py-0.5 bg-black/30 backdrop-blur-sm rounded-md text-[10px] md:text-xs font-medium text-white"
-                        >{{ $tech }}</span
-                      >
-                    {{ end }}
-                  </div>
-                  <p
-                    class="hidden md:block text-sm text-white mb-3 line-clamp-3 md:line-clamp-4"
-                  >
-                    {{ .description }}
-                  </p>
-
-                  <!-- Learn More button -->
-                  <a
-                    href="{{ .link }}"
-                    class="bg-white/90 backdrop-blur-sm hover:bg-white text-black text-xs md:text-sm font-medium py-1 md:py-1.5 px-2 md:px-3 rounded-md inline-block transition-all duration-300 transform opacity-100 md:opacity-0 group-hover:opacity-100 w-fit flex items-center shadow-lg hover:shadow-xl"
-                  >
-                    {{ T "learnMore" }}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-3.5 w-3.5 ml-1 transform group-hover:translate-x-1 transition-transform duration-200"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+        <div class="space-y-8 max-w-3xl mx-auto">
+          {{ range first 3 . }}
+            <div class="group">
+              <p class="text-gray-400 text-sm mb-1">{{ .date }}</p>
+              {{ partial "components/link-with-arrow" (dict
+                "href" .link
+                "text" .title
+                "class" "text-xl mb-3"
+                )
+              }}
+              <p class="text-gray-400">{{ .summary }}</p>
             </div>
           {{ end }}
-          <div class="flex justify-center mt-4 md:mt-8">
-            <a
-              href="{{ "projects/" | absLangURL }}"
-              class="text-blue-500 hover:text-blue-400 transition-colors duration-200 text-sm md:text-lg"
-              >{{ T "viewAll" }}</a
-            >
-          </div>
+        </div>
+        <div class="flex justify-center mt-8">
+          <a
+            href="{{ `blogs/` | absLangURL }}"
+            class="animated-link text-sm md:text-lg"
+            >{{ T "viewAll" }}</a
+          >
         </div>
       </section>
     {{ else }}
-      {{ warnf "No project data found for language %q. Please define either data/%s/projects.(yaml|toml|json) or params.projects in config." .Language.Lang .Language.Lang }}
+      {{ warnf "No blog data found for language %q. Please define either data/%s/blogs.(yaml|toml|json) or params.blogs in config." .Language.Lang .Language.Lang }}
     {{ end }}
   </div>
-
-  <style>
-    .tech-carousel {
-      width: 100%;
-      overflow: hidden;
-      mask-image: linear-gradient(
-        to right,
-        transparent,
-        black 10%,
-        black 90%,
-        transparent
-      );
-      -webkit-mask-image: linear-gradient(
-        to right,
-        transparent,
-        black 10%,
-        black 90%,
-        transparent
-      );
-    }
-
-    .carousel-container {
-      width: 100%;
-      overflow: hidden;
-      margin-bottom: 0.5rem;
-    }
-
-    .carousel-track,
-    .carousel-track-reverse {
-      display: flex;
-      width: fit-content;
-    }
-
-    .carousel-track {
-      animation: scroll 45s linear infinite;
-    }
-
-    .carousel-track-left-to-right {
-      animation: scroll-left-to-right 60s linear infinite;
-    }
-
-    .carousel-track-reverse {
-      animation: scroll-reverse 45s linear infinite;
-    }
-
-    .carousel-item {
-      display: flex;
-      align-items: center;
-      width: auto;
-      padding: 0.75rem 0.5rem;
-      margin: 0 0.1rem;
-      border-radius: 0.5rem;
-      white-space: nowrap;
-      gap: 0.5rem;
-    }
-
-    .carousel-item i {
-      font-size: 2.25rem;
-    }
-
-    .carousel-item span {
-      font-size: 1.25rem;
-      font-weight: 500;
-    }
-
-    .carousel-container:hover .carousel-track,
-    .carousel-container:hover .carousel-track-reverse,
-    .carousel-container:hover .carousel-track-left-to-right {
-      animation-play-state: paused;
-    }
-
-    @keyframes scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(calc(-100% / 2));
-      }
-    }
-
-    @keyframes scroll-left-to-right {
-      0% {
-        transform: translateX(calc(-100% / 2));
-      }
-      100% {
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes scroll-reverse {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(calc(-100% / 2));
-      }
-    }
-
-    .max-w-3xl {
-      border-color: rgba(75, 85, 99, 0.7);
-    }
-
-    .project-card {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      background: linear-gradient(
-        to bottom right,
-        rgba(30, 41, 59, 0.5),
-        rgba(30, 41, 59, 0.8)
-      );
-      backdrop-filter: blur(10px);
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow:
-        0 20px 25px -5px rgba(0, 0, 0, 0.2),
-        0 10px 10px -5px rgba(0, 0, 0, 0.1);
-      border-color: rgba(59, 130, 246, 0.5);
-    }
-    @media (max-width: 767px) {
-      .project-card {
-        margin: 0 1rem;
-      }
-      .aspect-w-16 {
-        padding-bottom: 75%;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow:
-          0 20px 25px -5px rgba(0, 0, 0, 0.2),
-          0 10px 10px -5px rgba(0, 0, 0, 0.1);
-        border-color: rgba(59, 130, 246, 0.5);
-      }
-    }
-    .aspect-w-16 {
-      position: relative;
-      padding-bottom: 56.25%;
-    }
-
-    .aspect-w-16 > img {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      object-fit: cover;
-      filter: saturate(1.1) contrast(1.1);
-    }
-
-    .line-clamp-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .blog-card {
-      transition: all 0.3s ease;
-    }
-
-    .blog-card:hover {
-      transform: translateX(4px);
-    }
-  </style>
 {{ end }}
