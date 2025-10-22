@@ -3,3 +3,9 @@ other = "Built using"
 
 [takeALookAtMy]
 other = "Take a look at my"
+
+[whatIWorkWith]
+other = "What I work with"
+
+[toolsIUse]
+other = "Tools I use"

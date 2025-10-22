@@ -1,0 +1,59 @@
+[[technologies]]
+icon = "devicon-archlinux-plain text-2xl"
+name = "Linux"
+
+[[technologies]]
+icon = "devicon-android-plain"
+name = "Play Store"
+
+[[technologies]]
+icon = "devicon-apple-original"
+name = "App Store"
+
+[[technologies]]
+icon = "devicon-nodejs-plain"
+name = "Node.js"
+
+[[technologies]]
+icon = "devicon-flutter-plain"
+name = "Flutter"
+
+[[technologies]]
+icon = "devicon-swift-plain"
+name = "Swift"
+
+[[technologies]]
+icon = "devicon-kotlin-plain"
+name = "Kotlin"
+
+[[technologies]]
+icon = "devicon-objectivec-plain"
+name = "Objective-C"
+
+[[technologies]]
+icon = "devicon-go-original-wordmark"
+name = "Golang"
+
+[[technologies]]
+icon = "devicon-tailwindcss-plain"
+name = "Tailwind CSS"
+
+[[technologies]]
+icon = "devicon-dart-plain"
+name = "Dart"
+
+[[technologies]]
+icon = "devicon-react-plain"
+name = "React"
+
+[[technologies]]
+icon = "devicon-mysql-plain"
+name = "MySQL"
+
+[[technologies]]
+icon = "devicon-rails-plain"
+name = "Rails"
+
+[[technologies]]
+icon = "devicon-nginx-plain"
+name = "Nginx"

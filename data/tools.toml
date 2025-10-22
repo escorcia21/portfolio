@@ -1,0 +1,50 @@
+# Development Tools
+[[tools]]
+icon = "devicon-grafana-plain"
+name = "Grafana"
+
+[[tools]]
+icon = "devicon-prometheus-plain"
+name = "Prometheus"
+
+[[tools]]
+icon = "devicon-googlecloud-plain"
+name = "Google Cloud"
+
+[[tools]]
+icon = "devicon-firebase-plain"
+name = "Firebase"
+
+[[tools]]
+icon = "devicon-github-original"
+name = "GitHub"
+
+[[tools]]
+icon = "devicon-bitbucket-original"
+name = "Bitbucket"
+
+[[tools]]
+path = "bitrise.svg"
+name = "Bitrise"
+svg = true
+
+# AI Tools
+[[tools]]
+name = "OpenAI"
+path = "openai.svg"
+svg = true
+
+[[tools]]
+name = "Gemini"
+path = "gemini.svg"
+svg = true
+
+[[tools]]
+name = "Anthropic"
+path = "anthropic.svg"
+svg = true
+
+[[tools]]
+name = "Deepseek"
+path = "deepseek.svg"
+svg = true

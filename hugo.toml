@@ -1,24 +1,42 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseURL = 'https://carlosdev.co/'
+title = 'Carlos Escorcia'
 
 defaultContentLanguage = "en"
 
 [params]
-  name = "Carlos Escorcia"
   user = "carlos"
-  hostName = "escorcia21.dev"
-  github = "https://github.com/escorcia21"
-
-[menu]
-  [[menu.header]]
-    name = "blog"
-    weight = 0
-    url = "blog"
-  [[menu.header]]
-    name = "about"
+  hostName = "dev"
+  
+[languages]
+  [languages.en]
     weight = 1
-    url = "about"
+    languageName = "English"
+    contentDir = "content/en"
+    languageCode = "en-us"
+  [languages.en.menu]
+    [[languages.en.menu.header]]
+      name = "blog"
+      weight = 0
+      url = "blog"
+    [[languages.en.menu.header]]
+      name = "about"
+      weight = 1
+      url = "about"
+
+  [languages.es]
+    weight = 2
+    languageName = "Español"
+    contentDir = "content/es"
+    languageCode = "es-es"
+  [languages.es.menu]
+    [[languages.es.menu.header]]
+      name = "blog"
+      weight = 0
+      url = "blog"
+    [[languages.es.menu.header]]
+      name = "acerca_de"
+      weight = 1
+      url = "about"
 
 [build]
   [build.buildStats]

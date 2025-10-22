@@ -1,0 +1,28 @@
+{{ $href := .href }}
+{{ $target := .target | default "" }}
+{{ $rel := .rel | default "" }}
+{{ $icon := .icon }}
+
+
+<a
+  href="{{ $href }}"
+  {{ with $target }}target="{{ . }}"{{ end }}
+  {{ with $rel }}rel="{{ . }}"{{ end }}
+  class="group relative inline-flex items-center justify-center"
+>
+  <!-- Glow effect -->
+  <span
+    class="absolute -inset-1 rounded-lg bg-linear-to-r from-font-accent to-yellow 
+               opacity-0 group-hover:opacity-20 transition-all duration-300"
+  ></span>
+  <!-- Icon container -->
+  <span
+    class="relative flex items-center justify-center p-2 
+               bg-primary-dark border border-border-primary rounded-lg
+               transform transition-all duration-300 
+               group-hover:border-border-hover-accent group-hover:scale-110
+               group-hover:rotate-3"
+  >
+    {{ $icon | safeHTML }}
+  </span>
+</a>

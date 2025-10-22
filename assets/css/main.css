@@ -25,6 +25,7 @@
 }
 
 @theme {
+    /* Base colors */
     --color-white: #E7E7E7;
     --color-white-dark: rgb(218, 218, 218);
     --color-primary: #153148;
@@ -39,6 +40,27 @@
     --color-grey-dark: rgba(36, 41, 47, 0.78);
     --color-grey-darker: rgba(26, 28, 33, 0.75);
 
+    /* Border colors */
+    --color-border-primary: rgba(21, 49, 72, 0.8);
+    /* Based on primary */
+    --color-border-primary-light: rgba(21, 49, 72, 0.4);
+    /* Lighter version */
+    --color-border-accent: rgba(242, 53, 88, 0.8);
+    /* Based on accent */
+    --color-border-white: rgba(231, 231, 231, 0.8);
+    /* Based on white */
+    --color-border-yellow: rgba(242, 203, 5, 0.8);
+    /* Based on yellow */
+    --color-border-dark: rgba(26, 28, 33, 0.75);
+    /* Based on grey-darker */
+
+    /* Hover border colors */
+    --color-border-hover-primary: #153148;
+    --color-border-hover-accent: #F23558;
+    --color-border-hover-white: #E7E7E7;
+    --color-border-hover-yellow: #F2CB05;
+
+    /* Fonts */
     --font-sans: "Open Sans", sans-serif;
     --font-mono: "Fira Mono", monospace;
 }
