@@ -3,12 +3,12 @@
   {{ $authorData := index site.Data .Language.Lang "author" }}
   {{ $author := cond (and $authorData $authorData.author) $authorData.author site.Params }}
   {{ with $author }}
-    <p>
+    <p class="text-center">
       ©
       {{ now.Format "2006" }}
       {{ .name }}
     </p>
-    <p>
+    <p class="text-center">
       {{ T "builtUsing" }}
       <a href="https://gohugo.io/" target="_blank" class="animated-link">Hugo</a
       >.

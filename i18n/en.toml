@@ -18,3 +18,26 @@ other = "Built using"
 
 [takeALookAtMy]
 other = "Take a look at my" 
+
+[readingTime]
+other = "Reading time"
+
+[readingTimeDesc]
+one = "1 minute"
+other = "{{ .Count }} minutes"
+
+[notFound]
+other = "Page not found"
+
+[notFoundDesc]
+other = "The page you’re looking for doesn’t exist, was moved, or might be temporarily unavailable."
+
+[authors]
+other = "Authors"
+
+[tags]
+other = "Tags"
+
+[published]
+other = "Published"
+

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @source "hugo_stats.json";
 
 @font-face {
@@ -42,17 +43,11 @@
 
     /* Border colors */
     --color-border-primary: rgba(21, 49, 72, 0.8);
-    /* Based on primary */
     --color-border-primary-light: rgba(21, 49, 72, 0.4);
-    /* Lighter version */
     --color-border-accent: rgba(242, 53, 88, 0.8);
-    /* Based on accent */
     --color-border-white: rgba(231, 231, 231, 0.8);
-    /* Based on white */
     --color-border-yellow: rgba(242, 203, 5, 0.8);
-    /* Based on yellow */
     --color-border-dark: rgba(26, 28, 33, 0.75);
-    /* Based on grey-darker */
 
     /* Hover border colors */
     --color-border-hover-primary: #153148;
@@ -66,6 +61,53 @@
 }
 
 @layer utilities {
+    .prose {
+        /* Typography plugin */
+        --tw-prose-body: #ffffff;
+        --tw-prose-headings: #fefefe;
+        --tw-prose-lead: #f4f4f4;
+        --tw-prose-links: #a0cfff;
+        --tw-prose-bold: #ffffff;
+        --tw-prose-counters: #d4d4d4;
+        --tw-prose-bullets: #d4d4d4;
+        --tw-prose-hr: #5a5a5a;
+        --tw-prose-quotes: #f0f0f0;
+        --tw-prose-quote-borders: #5a5a5a;
+        --tw-prose-captions: #d4d4d4;
+        --tw-prose-code: #ffffff;
+        --tw-prose-pre-code: #e4e4e4;
+        --tw-prose-pre-bg: #1e1e1e;
+        --tw-prose-th-borders: #5a5a5a;
+        --tw-prose-td-borders: #4a4a4a;
+    }
+
+    .toc ul {
+        @apply list-none pl-0 mt-0 space-y-1;
+    }
+
+    .toc>ul>li {
+        @apply font-semibold text-gray-300;
+        /* top-level items: light gray */
+    }
+
+    .toc>ul>li>a {
+        @apply block py-1 text-gray-400 hover:text-white transition-colors duration-150;
+    }
+
+    .toc ul ul {
+        @apply pl-4 mt-1 border-l border-gray-500;
+        /* sub-level indent + border */
+    }
+
+    .toc ul ul li {
+        @apply text-sm text-gray-500;
+        /* deeper level: slightly darker gray */
+    }
+
+    .toc ul ul li a {
+        @apply text-gray-500 hover:text-gray-300 transition-colors duration-150;
+    }
+
     @keyframes scroll-left {
         0% {
             transform: translateX(0);
@@ -111,5 +153,34 @@
     .animated-link {
         color: var(--color-font-accent);
         text-decoration: none;
+    }
+
+    /* Style the horizontal scrollbar with light gray thumb & subtle track */
+    .terminal-code-scrollbar::-webkit-scrollbar {
+        height: 6px;
+        /* thin bar for horizontal scroll */
+    }
+
+    .terminal-code-scrollbar::-webkit-scrollbar-track {
+        background: theme('colors.primary-dark');
+        /* track darker to contrast with thumb */
+        border-radius: 3px;
+    }
+
+    .terminal-code-scrollbar::-webkit-scrollbar-thumb {
+        background: #a0a0a0;
+        /* light grey thumb */
+        border-radius: 3px;
+    }
+
+    .terminal-code-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #c0c0c0;
+        /* slightly brighter on hover */
+    }
+
+    /* Firefox support */
+    .terminal-code-scrollbar {
+        scrollbar-width: small;
+        scrollbar-color: #a0a0a0 theme('colors.primary-dark');
     }
 }

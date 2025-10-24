@@ -1,25 +1,46 @@
-<div class="group">
-  <p class="text-gray-400 text-sm mb-1">
-    {{ .Date.Format "Jan 2, 2006" }}
-  </p>
-  {{ partial "components/link-with-arrow" (dict "href" .RelPermalink "text" .Title "class" "text-xl mb-3" ) }}
-  {{ with .Summary }}
-    <p class="text-gray-400">{{ . }}</p>
-  {{ else }}
-    <p class="text-gray-400">{{ .Plain | truncate 160 }}</p>
-  {{ end }}
+<article>
+  <!-- Metadata: Date & Reading Time -->
+  <header class="flex justify-between items-center mb-1 text-sm text-gray-400">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">
+      {{ .Date.Format "Jan 2, 2006" }}
+    </time>
+    <span aria-label="Estimated reading time">
+      {{ T "readingTime" }}
+      {{ T "readingTimeDesc"  .ReadingTime }}
+    </span>
+  </header>
 
+  <!-- Title -->
+  <h3 class="text-xl font-semibold mb-3">
+    {{ partial "components/link-with-arrow" (dict
+      "href" .RelPermalink
+      "text" .Title
+      "class" "hover:text-primary transition-colors"
+      )
+    }}
+  </h3>
+
+  <!-- Summary -->
+  <p class="text-gray-400 mb-4">
+    {{ with .Summary }}
+      {{ . }}
+    {{ else }}
+      {{ .Plain | truncate 160 }}
+    {{ end }}
+  </p>
 
   <!-- Tags -->
   {{ with .Params.tags }}
-    <div class="flex flex-wrap gap-2">
-      {{ range . }}
-        <span
-          class="bg-gray-700/40 text-gray-300 text-xs px-3 py-1 rounded-full hover:bg-gray-600 transition"
-        >
-          {{ . }}
-        </span>
-      {{ end }}
-    </div>
+    <footer class="mt-2">
+      <ul class="flex flex-wrap gap-2">
+        {{ range . }}
+          {{ $tag := . }}
+          {{ $href := printf "/tags/%s/" (urlize $tag) }}
+          <li>
+            {{ partial "components/chip-text.html" (dict "href" $href "text" $tag) }}
+          </li>
+        {{ end }}
+      </ul>
+    </footer>
   {{ end }}
-</div>
+</article>

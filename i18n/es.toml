@@ -17,4 +17,26 @@ other = "Hora Local:"
 other = "Construido con"
 
 [takeALookAtMy]
-other = "Echa un vistazo a mi" 
+other = "Echa un vistazo a mi"
+
+[readingTime]
+other = "Tiempo de lectura"
+
+[readingTimeDesc]
+one = "1 minuto"
+other = "{{ .Count }} minutos"
+
+[notFound]
+other = "Página no encontrada"
+
+[notFoundDesc]
+other = "La página que buscas no existe, fue movida o podría estar temporalmente no disponible."
+
+[authors]
+other = "Autores"
+
+[tags]
+other = "Etiquetas"
+
+[published]
+other = "Publicado"

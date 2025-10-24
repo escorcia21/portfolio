@@ -1,0 +1,37 @@
+{{/* render-hook: terminal style code block */}}
+{{ $result := transform.HighlightCodeBlock . }}
+<div
+  class="my-6 rounded-lg overflow-hidden font-mono text-sm bg-primary-dark text-font-accent relative"
+>
+  <!-- Window chrome bar -->
+  <div
+    class="flex items-center justify-between px-4 py-2 bg-primary-dark/90 border-b border-border-primary"
+  >
+    <div class="flex gap-2">
+      <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+      <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+    </div>
+    <div class="font-mono text-xs text-font-yellow tracking-wide">
+      session: ~/<span class="font-bold"
+        >{{ if eq .Type "bash" }}
+          bash
+        {{ else }}
+          file.{{ .Type | default "txt" }}
+        {{ end }}</span
+      >
+    </div>
+    <button
+      class="copy-btn flex items-center gap-1 text-font-accent hover:cursor-pointer focus:outline-none"
+      aria-label="Copy code"
+    >
+      {{ $svg := resources.Get (printf "icons/%s" "clipboard.svg" ) | resources.ExecuteAsTemplate "clipboard.svg" . }}
+      {{ $svg.Content | safeHTML }}
+      <span class="text-xs">Copy</span>
+    </button>
+  </div>
+  <!-- Code content -->
+  <pre
+    class="p-4 overflow-x-auto m-0! terminal-code-scrollbar bg-primary-dark"
+  ><code>{{ $result.Inner | safeHTML }}</code></pre>
+</div>

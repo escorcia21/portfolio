@@ -1,0 +1,26 @@
+{{ $href := .href | default "#" }}
+{{ $text := .text | default "" }}
+{{ $target := .target }}
+{{ $rel := .rel }}
+<a
+  href="{{ $href }}"
+  {{ with $target }}target="{{ . }}"{{ end }}
+  {{ with $rel }}rel="{{ . }}"{{ end }}
+  class="group relative inline-flex items-center justify-center text-sm text-white no-underline"
+>
+  <!-- Glow effect -->
+  <span
+    class="absolute -inset-1 rounded-xl bg-linear-to-r from-font-accent to-yellow 
+               opacity-0 group-hover:opacity-20 transition-all duration-300"
+  ></span>
+  <!-- Icon container -->
+  <span
+    class="relative flex items-center justify-center py-1 px-2 
+               bg-primary-dark/55 border border-border-primary rounded-xl
+               transform transition-all duration-300 
+               hover:border-border-hover-accent hover:scale-110
+               hover:rotate-3"
+  >
+    {{ $text | plainify | htmlEscape }}
+  </span>
+</a>

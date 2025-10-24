@@ -1,0 +1,152 @@
+{{/* layouts/partials/pagination.html */}}
+{{- $p := .paginator -}}
+{{- if and $p (gt $p.TotalPages 1) -}}
+  <nav class="w-full" role="navigation" aria-label="Pagination">
+    <div
+      class="mx-auto max-w-4xl px-3 py-3 flex flex-col sm:flex-row items-center justify-between gap-3
+           bg-white/60 dark:bg-slate-900/60 rounded-lg shadow-sm backdrop-blur-sm"
+    >
+      {{/* Prev */}}
+      <div class="w-full sm:w-auto flex items-center justify-start">
+        {{- if $p.HasPrev -}}
+          <a
+            href="{{ $p.Prev.URL }}"
+            rel="prev"
+            aria-label="Go to previous page (page {{ sub $p.PageNumber 1 }})"
+            class="inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium
+               border border-transparent shadow-sm
+               hover:translate-x-[-2px] motion-safe:transition-transform motion-safe:duration-150
+               active:translate-x-0 active:scale-95
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500
+               bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200
+               hover:shadow-md"
+          >
+            <!-- chevron left -->
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 16L6 10l6-6"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="sr-only">Previous</span>
+            <span class="hidden sm:inline"
+              >{{ i18n "newer_posts" | default "Newer posts" }}</span
+            >
+            <span class="sm:hidden">Prev</span>
+          </a>
+        {{- else -}}
+          <span
+            class="inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium opacity-50 cursor-not-allowed
+               bg-white/40 dark:bg-slate-800/40 text-slate-500 dark:text-slate-400"
+            aria-disabled="true"
+          >
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 16L6 10l6-6"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="sr-only">Previous</span>
+            <span class="hidden sm:inline"
+              >{{ i18n "newer_posts" | default "Newer posts" }}</span
+            >
+            <span class="sm:hidden">Prev</span>
+          </span>
+        {{- end -}}
+      </div>
+
+      {{/* Status (center) */}}
+      <div class="w-full sm:w-auto text-center">
+        <p class="text-sm font-medium text-slate-600 dark:text-slate-300">
+          {{ i18n "page" | default "Page" }}
+          <span class="font-semibold">{{ $p.PageNumber }}</span>
+          <span class="hidden sm:inline"> / {{ $p.TotalPages }}</span>
+        </p>
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          <span class="sr-only">Pagination status:</span>
+          {{ i18n "pagination_help" | default "Use the previous and next links to navigate." }}
+        </p>
+      </div>
+
+      {{/* Next */}}
+      <div class="w-full sm:w-auto flex items-center justify-end">
+        {{- if $p.HasNext -}}
+          <a
+            href="{{ $p.Next.URL }}"
+            rel="next"
+            aria-label="Go to next page (page {{ add $p.PageNumber 1 }})"
+            class="inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium
+               border border-transparent shadow-sm
+               hover:translate-x-2 motion-safe:transition-transform motion-safe:duration-150
+               active:translate-x-0 active:scale-95
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500
+               bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200
+               hover:shadow-md"
+          >
+            <span class="hidden sm:inline"
+              >{{ i18n "older_posts" | default "Older posts" }}</span
+            >
+            <span class="sm:hidden">Next</span>
+            <span class="sr-only">Next</span>
+            <!-- chevron right -->
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 4l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        {{- else -}}
+          <span
+            class="inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium opacity-50 cursor-not-allowed
+               bg-white/40 dark:bg-slate-800/40 text-slate-500 dark:text-slate-400"
+            aria-disabled="true"
+          >
+            <span class="hidden sm:inline"
+              >{{ i18n "older_posts" | default "Older posts" }}</span
+            >
+            <span class="sm:hidden">Next</span>
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 4l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        {{- end -}}
+      </div>
+    </div>
+  </nav>
+{{- end -}}

@@ -1,0 +1,35 @@
+{{ define "main" }}
+  {{ $layout := .Site.Params.displayDateFormat | default "2006-01-02" }}
+
+
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Page header -->
+    <header class="mb-8">
+      <h1
+        class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100"
+      >
+        {{ .Title }}
+      </h1>
+      {{ with .Content }}
+        <div class="prose prose-slate dark:prose-invert mt-4">
+          {{- . -}}
+        </div>
+      {{ end }}
+    </header>
+
+    {{ $pages := .RegularPages }}
+    {{ $paginator := .Paginate $pages }}
+
+
+    <section>
+      {{- range $i, $page := $paginator.Pages -}}
+        {{ partial "components/post-card.html" . }}
+      {{- end -}}
+    </section>
+
+    <!-- pagination -->
+    <div class="mt-8">
+      {{ partial "pagination.html" (dict "paginator" $paginator) }}
+    </div>
+  </div>
+{{ end }}

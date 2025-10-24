@@ -2,8 +2,6 @@
 {{ $target := .target | default "" }}
 {{ $rel := .rel | default "" }}
 {{ $icon := .icon }}
-
-
 <a
   href="{{ $href }}"
   {{ with $target }}target="{{ . }}"{{ end }}

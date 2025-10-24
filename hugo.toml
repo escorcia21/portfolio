@@ -16,11 +16,11 @@ defaultContentLanguage = "en"
     [[languages.en.menu.header]]
       name = "blog"
       weight = 0
-      url = "blog"
+      url = "posts"
     [[languages.en.menu.header]]
       name = "about"
       weight = 1
-      url = "about"
+      url = "/"
 
   [languages.es]
     weight = 2
@@ -31,11 +31,11 @@ defaultContentLanguage = "en"
     [[languages.es.menu.header]]
       name = "blog"
       weight = 0
-      url = "blog"
+      url = "posts"
     [[languages.es.menu.header]]
       name = "acerca_de"
       weight = 1
-      url = "about"
+      url = "/"
 
 [build]
   [build.buildStats]
