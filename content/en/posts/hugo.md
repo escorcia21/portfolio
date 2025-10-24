@@ -4,6 +4,7 @@ description: "Learn how to combine Hugo and Tailwind CSS to create a fast, beaut
 date: 2025-10-23
 tags: ["hugo", "tailwind", "web development", "tutorial"]
 authors: ["Carlos Escorcia"]
+summary: "A step-by-step guide to setting up a personal blog using Hugo and Tailwind CSS, focusing on performance and design."
 draft: false
 ---
 

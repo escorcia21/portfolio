@@ -23,9 +23,7 @@
   <!-- Summary -->
   <p class="text-gray-400 mb-4">
     {{ with .Summary }}
-      {{ . }}
-    {{ else }}
-      {{ .Plain | truncate 160 }}
+      {{ . | truncate 160 }}
     {{ end }}
   </p>
 
