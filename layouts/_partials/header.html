@@ -29,6 +29,7 @@
             class="no-underline animated-link text-white!"
             href="{{ .URL | absLangURL }}"
             title="{{ .Title }}"
+            {{ if in .URL "index.xml" }}target="_blank" rel="noopener"{{ end }}
           >
             ~/{{- .Name -}}
           </a>
