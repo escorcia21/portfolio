@@ -111,19 +111,44 @@
         @apply text-gray-500 hover:text-gray-300 transition-colors duration-150;
     }
 
-    @keyframes scroll-left {
+
+    .carousel-track,
+    .carousel-track-reverse {
+        display: flex;
+        width: fit-content;
+    }
+
+    .carousel-track {
+        animation: scroll 45s linear infinite;
+    }
+
+    .carousel-track-left-to-right {
+        animation: scroll-left-to-right 60s linear infinite;
+    }
+
+    .carousel-track-reverse {
+        animation: scroll-reverse 45s linear infinite;
+    }
+
+    .carousel-container:hover .carousel-track,
+    .carousel-container:hover .carousel-track-reverse,
+    .carousel-container:hover .carousel-track-left-to-right {
+        animation-play-state: paused;
+    }
+
+    @keyframes scroll {
         0% {
             transform: translateX(0);
         }
 
         100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% / 2));
         }
     }
 
-    @keyframes scroll-right {
+    @keyframes scroll-left-to-right {
         0% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% / 2));
         }
 
         100% {
@@ -131,14 +156,15 @@
         }
     }
 
-    .animate-scroll-left {
-        animation: scroll-left 40s linear infinite;
-    }
+    @keyframes scroll-reverse {
+        0% {
+            transform: translateX(0);
+        }
 
-    .animate-scroll-right {
-        animation: scroll-right 40s linear infinite;
+        100% {
+            transform: translateX(calc(-100% / 2));
+        }
     }
-
 
     .animated-link {
         box-shadow: inset 0 0 0 0 var(--color-font-accent);

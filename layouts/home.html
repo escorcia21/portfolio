@@ -104,11 +104,9 @@
 
       <!-- First carousel -->
       <div
-        class="overflow-hidden w-full mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+        class="overflow-hidden w-full mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] carousel-container"
       >
-        <div
-          class="flex animate-scroll-left hover:[animation-play-state:paused] w-max"
-        >
+        <div class="flex carousel-track carousel-track-left-to-right w-max">
           {{ range .Site.Data.technologies.technologies }}
             <div
               class="flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg"
@@ -127,11 +125,9 @@
 
       <!-- Second carousel -->
       <div
-        class="overflow-hidden w-full mt-4 mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+        class="overflow-hidden w-full mt-4 mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] carousel-container"
       >
-        <div
-          class="flex animate-scroll-right hover:[animation-play-state:paused] w-max"
-        >
+        <div class="flex carousel-track-reverse w-max">
           {{ range .Site.Data.tools.tools }}
             <div
               class="flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg"
