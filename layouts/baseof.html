@@ -10,7 +10,9 @@
     <header class="shrink-0  bg-linear-to-t to-primary-dark ">
       {{ partial "header.html" . }}
     </header>
-    <main class="flex-1 shrink-0 w-full md:w-4/5 lg:w-3/5 mx-auto px-14 py-12">
+    <main
+      class="flex-1 shrink-0 w-full md:w-4/5 lg:w-3/5 mx-auto px-14 md:px-0 py-12"
+    >
       {{ block "main" . }}{{ end }}
     </main>
     <footer class="shrink-0 bg-linear-to-b to-primary-dark">

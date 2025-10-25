@@ -7,7 +7,7 @@
     {{ with $author }}
       <section class="mb-16">
         <div
-          class="flex flex-col md:flex-row items-center justify-between gap-8"
+          class="flex flex-col lg:flex-row items-center justify-between gap-8"
         >
           <!-- Profile Picture -->
           {{ with .avatar }}
@@ -28,7 +28,7 @@
           {{ end }}
           <!-- Author Info Card -->
           <div
-            class="w-full md:w-2/3 p-6 border-2 border-gray-500/20 rounded-xl shadow-xl relative 
+            class="w-full lg:w-2/3 p-6 border-2 border-gray-500/20 rounded-xl shadow-xl relative 
                    transform transition-all duration-300 hover:shadow-2xl hover:border-border-hover-accent"
           >
             <div class="text-left relative z-10">
@@ -156,8 +156,10 @@
 
     {{ with $experience }}
       <section>
-        <h2 class="text-4xl font-bold mb-5">{{ T "experienceTitle" }}</h2>
-        <div class="space-y-8 max-w-3xl mx-auto">
+        <h2 class="text-4xl font-bold font-mono mb-5">
+          {{ T "experienceTitle" }}
+        </h2>
+        <div class="space-y-8 max-w-4xl mx-auto">
           {{ range $index, $exp := . }}
             <div class="relative pl-10 group/exp">
               <!-- Timeline bar with subtle initial state -->
@@ -261,9 +263,9 @@
     {{ if gt (len $posts) 0 }}
       <section class="mt-20 mb-20">
         <div class="flex justify-between items-center mb-8">
-          <h2 class="text-4xl font-bold">{{ T "blogsTitle" }}</h2>
+          <h2 class="text-4xl font-bold font-mono">{{ T "blogsTitle" }}</h2>
         </div>
-        <div class="space-y-8 max-w-3xl mx-auto">
+        <div class="space-y-8 max-w-4xl mx-auto">
           {{ range $posts }}
             {{ partial "components/post-card.html" . }}
           {{ end }}
