@@ -107,7 +107,9 @@
         class="overflow-hidden w-full mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] carousel-container"
       >
         <div class="flex carousel-track carousel-track-left-to-right w-max">
-          {{ range .Site.Data.technologies.technologies }}
+          {{ $technologies := .Site.Data.technologies.technologies }}
+          {{ $duplicated := append $technologies  $technologies }}
+          {{ range $duplicated }}
             <div
               class="flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg"
             >
@@ -128,7 +130,9 @@
         class="overflow-hidden w-full mt-4 mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] carousel-container"
       >
         <div class="flex carousel-track-reverse w-max">
-          {{ range .Site.Data.tools.tools }}
+          {{ $tools := .Site.Data.tools.tools }}
+          {{ $duplicated := append $tools $tools }}
+          {{ range $duplicated }}
             <div
               class="flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg"
             >
