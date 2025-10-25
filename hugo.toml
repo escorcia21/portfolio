@@ -5,6 +5,7 @@ defaultContentLanguage = "en"
 [params]
   user = "carlos"
   hostName = "dev"
+  favicon = "images/favicon.svg"
   
 [languages]
   [languages.en]
