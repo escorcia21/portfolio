@@ -57,8 +57,7 @@
 
             <!-- Social Icons with enhanced animations -->
             <div
-              class="mt-8 md:mt-0 flex flex-wrap justify-center gap-4 relative z-20
-                      md:absolute md:top-6 md:right-6 md:flex-nowrap md:justify-end"
+              class="mt-8 md:mt-0 flex flex-wrap justify-center gap-4 relative z-20 xl1360:absolute xl1360:top-6 xl1360:right-6 xl1360:flex-nowrap xl1360:justify-end"
             >
               {{ with .email }}
                 {{ $emailSvg := resources.Get "icons/email.svg" | resources.ExecuteAsTemplate "email.svg" . }}

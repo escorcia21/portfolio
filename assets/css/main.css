@@ -58,6 +58,9 @@
     /* Fonts */
     --font-sans: "Open Sans", sans-serif;
     --font-mono: "Fira Mono", monospace;
+
+    /* breakpoints */
+    --breakpoint-xl1360: 1360px;
 }
 
 @layer utilities {
