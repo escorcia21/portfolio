@@ -164,7 +164,7 @@
             <div class="relative pl-10 group/exp">
               <!-- Timeline bar with subtle initial state -->
               <div
-                class="absolute left-0 top-0 w-[4px] h-full bg-gray-500/20
+                class="absolute left-0 top-0 w-1 h-full bg-gray-500/20
                           before:absolute before:inset-0 before:bg-linear-to-b 
                           before:from-font-accent/0 before:via-font-accent/40 before:to-font-accent/0
                           before:opacity-0 before:transition-all before:duration-500
@@ -175,7 +175,7 @@
 
               <!-- Animated connector line -->
               <div
-                class="absolute left-[2px] top-[18px] w-[14px] h-[4px] 
+                class="absolute left-0.5 top-[18px] w-3.5 h-1 
                           bg-gray-500/20 origin-left
                           before:absolute before:inset-0 before:bg-linear-to-r 
                           before:from-font-accent before:to-transparent
@@ -186,15 +186,15 @@
               ></div>
 
               <div
-                class="absolute -left-[6px] top-[12px] flex items-center justify-center"
+                class="absolute -left-1.5 top-3 flex items-center justify-center"
               >
                 <!-- Main dot -->
                 <div
                   class="relative w-4 h-4 rounded-full 
                              border-2 border-gray-500/40 bg-primary-dark
-                             before:absolute before:inset-[2px] before:rounded-full 
+                             before:absolute before:inset-0.5 before:rounded-full 
                              before:bg-linear-to-br before:from-gray-500/20 before:to-transparent
-                             after:absolute after:inset-[-2px] after:rounded-full after:border
+                             after:absolute after:-inset-0.5 after:rounded-full after:border
                              after:border-font-accent/30 after:scale-0 after:opacity-0
                              after:transition-all after:duration-500
                              transition-all duration-300 ease-out
