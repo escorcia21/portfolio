@@ -5,7 +5,11 @@
   content="{{ .Description | default .Site.Params.SiteDescription }}"
 />
 
-<link rel="icon" type="svg" href="{{ .Site.Params.favicon }}" />
+{{ with .Site.Params.favicon }}
+  <link rel="icon" href="{{ . | absURL }}" type="image/svg+xml" />
+  <link rel="shortcut icon" href="{{ . | absURL }}" type="image/x-icon" />
+{{ end }}
+
 
 <link
   rel="stylesheet"
