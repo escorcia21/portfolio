@@ -1,0 +1,31 @@
+<div class="shadow overflow-hidden sm:rounded-lg bg-primary-dark/40">
+  <table
+    {{ range $k, $v := .Attributes }}
+      {{ if $v }}
+        {{ printf " %s=%q" $k $v | safeHTMLAttr }}
+      {{ end }}
+    {{ end }}
+    class="min-w-full text-sm text-gray-100 mt-0 mb-0 sm:rounded-lg"
+  >
+    <thead class=" text-xs uppercase font-medium">
+      {{ range .THead }}
+        <tr>
+          {{ range . }}
+            <th scope="col" class="px-6 py-3 text-left tracking-wider">
+              {{ .Text }}
+            </th>
+          {{ end }}
+        </tr>
+      {{ end }}
+    </thead>
+    <tbody>
+      {{ range .TBody }}
+        <tr class="border-t border-gray-700">
+          {{ range . }}
+            <td class="px-4 py-2">{{ .Text }}</td>
+          {{ end }}
+        </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>

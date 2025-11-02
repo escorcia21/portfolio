@@ -1,0 +1,9 @@
+{{ $href := .Destination | safeURL }}
+{{ $text := .Text }}
+
+{{ partial "components/link-with-arrow" (dict
+  "href" $href
+  "text" $text
+  "class" "text-blue-400 gap-0! no-underline"
+  )
+}}

@@ -8,11 +8,6 @@ defaultContentLanguage = "en"
   favicon = "images/favicon.svg"
   
 [languages]
-  [languages.en]
-    weight = 1
-    languageName = "English"
-    contentDir = "content/en"
-    languageCode = "en-us"
   [languages.en.menu]
     [[languages.en.menu.header]]
       name = "blog"
@@ -27,11 +22,6 @@ defaultContentLanguage = "en"
       weight = 3
       url = "/index.xml"
 
-  [languages.es]
-    weight = 2
-    languageName = "Español"
-    contentDir = "content/es"
-    languageCode = "es-es"
   [languages.es.menu]
     [[languages.es.menu.header]]
       name = "blog"
@@ -64,6 +54,11 @@ defaultContentLanguage = "en"
     source = 'hugo_stats.json'
     target = 'assets/notwatching/hugo_stats.json'
 
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 2
+    
 [outputs]
 home = ['html', 'rss']
 section = ['html']

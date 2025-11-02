@@ -73,7 +73,7 @@
         --tw-prose-bold: #ffffff;
         --tw-prose-counters: #d4d4d4;
         --tw-prose-bullets: #d4d4d4;
-        --tw-prose-hr: #5a5a5a;
+        --tw-prose-hr: rgba(255, 255, 255, 0.363);
         --tw-prose-quotes: #f0f0f0;
         --tw-prose-quote-borders: #5a5a5a;
         --tw-prose-captions: #d4d4d4;
@@ -84,33 +84,36 @@
         --tw-prose-td-borders: #4a4a4a;
     }
 
+    /* Override inline code inside prose (typography plugin) */
+    .prose code:not(pre code) {
+        @apply bg-primary-darker/30 text-white px-1.5 py-0.5 rounded font-mono;
+    }
+
+    /* Optional: Remove default before/after backticks added by typography */
+    .prose code::before,
+    .prose code::after {
+        content: none;
+    }
+
+    .toc a {
+        @apply text-gray-300 hover:text-[#fff] transition-colors duration-150;
+    }
+
     .toc ul {
         @apply list-none pl-0 mt-0 space-y-1;
     }
 
-    .toc>ul>li {
-        @apply font-semibold text-gray-300;
-        /* top-level items: light gray */
-    }
-
     .toc>ul>li>a {
-        @apply block py-1 text-gray-400 hover:text-white transition-colors duration-150;
+        @apply block py-1 text-gray-400;
     }
 
     .toc ul ul {
         @apply pl-4 mt-1 border-l border-gray-500;
-        /* sub-level indent + border */
     }
 
     .toc ul ul li {
         @apply text-sm text-gray-500;
-        /* deeper level: slightly darker gray */
     }
-
-    .toc ul ul li a {
-        @apply text-gray-500 hover:text-gray-300 transition-colors duration-150;
-    }
-
 
     .carousel-track,
     .carousel-track-reverse {
