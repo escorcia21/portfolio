@@ -40,3 +40,30 @@ other = "Etiquetas"
 
 [published]
 other = "Publicado"
+
+[and]
+other = "y"
+
+[onThisPage]
+other = "En esta página"
+
+[page]
+other = "Página"
+
+[paginationStatus]
+other = "Estado de paginación:"
+
+[paginationHelp]
+other = "Usa los enlaces de anterior y siguiente para navegar."
+
+[previous]
+other = "Anterior"
+
+[newerPosts]
+other = "Publicaciones más nuevas"
+
+[next]
+other = "Siguiente"
+
+[olderPosts]
+other = "Publicaciones más antiguas"

@@ -14,7 +14,7 @@
         )
       }}
     {{ end }}
-    or
+    {{ T "and" }}
     {{ with $github }}
       {{ partial "components/link-with-arrow" (dict
         "href" .

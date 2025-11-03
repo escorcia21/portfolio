@@ -41,3 +41,29 @@ other = "Tags"
 [published]
 other = "Published"
 
+[and]
+other = "and"
+
+[onThisPage]
+other = "On this page"
+
+[page]
+other = "Page"
+
+[paginationStatus]
+other = "Pagination status:"
+
+[paginationHelp]
+other = "Use the previous and next links to navigate."
+
+[previous]
+other = "Previous"
+
+[newerPosts]
+other = "Newer posts"
+
+[next]
+other = "Next"
+
+[olderPosts]
+other = "Older posts"
