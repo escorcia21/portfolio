@@ -225,7 +225,7 @@ scrape_configs:
 ```
 
 > [!NOTE]
-> 💡 **Note:** In the Prometheus target configuration, `cadvisor:8080` refers to the **service name** and **port** defined in the **Docker Compose** file.
+> In the Prometheus target configuration, `cadvisor:8080` refers to the **service name** and **port** defined in the **Docker Compose** file.
 > All services within the same **Docker network** can communicate using their **service names** and **ports** instead of IP addresses.
 
 ---
@@ -266,7 +266,6 @@ To make setup easier, we’ll clone a repository that already contains the **Gra
 Here’s your text rewritten as a clear, polished **information section** in Markdown style (perfect for tutorials or docs):
 
 > [!NOTE]
-> ℹ️ **Info:**
 > For this tutorial, I imported a **pre-configured Grafana dashboard** that visualizes Docker container metrics collected by Prometheus.
 > You can check it out here: [Docker Host & Container Overview Dashboard (ID: 10619)](https://grafana.com/grafana/dashboards/10619-docker-host-container-overview/)
 
@@ -420,7 +419,7 @@ DB_NAME=todo_app
 ```
 
 > [!TIP]
-> **Tip:** Feel free to adjust these values as needed, especially `DB_PASSWORD`.
+> Feel free to adjust these values as needed, especially `DB_PASSWORD`.
 > Remember to keep your `.env` file private by adding it to `.gitignore`.
 
 ---
@@ -636,7 +635,7 @@ SECRET_KEY_BASE=$(openssl rand -hex 32)
 ```
 
 > [!NOTE]
-> **Note:** The `SECRET_KEY_BASE` is used by Rails for encrypting cookies and sessions.
+> The `SECRET_KEY_BASE` is used by Rails for encrypting cookies and sessions.
 > Generate it using the command above.
 
 ---

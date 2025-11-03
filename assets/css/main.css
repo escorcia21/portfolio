@@ -139,6 +139,10 @@
         content: none;
     }
 
+    .prose blockquote {
+        @apply border-0;
+    }
+
     .toc a {
         @apply text-gray-300 hover:text-[#fff] transition-colors duration-150;
     }

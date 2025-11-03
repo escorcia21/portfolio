@@ -67,3 +67,18 @@ other = "Next"
 
 [olderPosts]
 other = "Older posts"
+
+[note]
+other = "Note"
+
+[tip]
+other = "Tip"
+
+[quote]
+other = "Quote"
+
+[warning]
+other = "Warning"
+
+[alert]
+other = "Alert"

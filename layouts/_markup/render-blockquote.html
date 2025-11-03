@@ -1,10 +1,58 @@
-<figure>
-  <blockquote {{ with .Attributes.cite }}cite="{{ . }}"{{ end }}>
-    {{ .Text }}
-  </blockquote>
+{{ $emojis := dict
+  "caution" ":exclamation:"
+  "important" ":information_source:"
+  "note" ":information_source:"
+  "tip" ":bulb:"
+  "warning" ":warning:"
+}}
+
+{{ $styles := dict
+  "quote" "border-l-6 border-white"
+  "note"  "border-l-6 border-[#a0cfff]"
+  "tip"   "border-l-6 border-[#00cc88]"
+  "warning" "border-l-6 border-yellow"
+  "alert" "border-l-6 border-font-accent"
+}}
+
+{{ $type := or .Type (index .Attributes "type") "quote" }}
+{{ $alertType := or .AlertType (index .Attributes "alertType") "" }}
+
+{{ if or (eq $type "alert") (ne $alertType "") }}
+  {{ $at := cond (ne $alertType "") $alertType $type }}
+  <div
+    role="alert"
+    class="p-4 rounded {{ index $styles $at }} bg-primary-dark/40 text-white"
+  >
+    <p
+      class="alert-heading font-semibold mb-0 mt-0 inline-flex items-center gap-2 text-white"
+    >
+      {{ transform.Emojify (index $emojis $at) }}
+      {{ with .AlertTitle }}
+        {{ . }}
+      {{ else }}
+        {{ or (i18n $at) (title $at) }}
+      {{ end }}
+    </p>
+    <div class="not-italic">
+      {{ .Text }}
+    </div>
+  </div>
   {{ with .Attributes.caption }}
-    <figcaption class="blockquote-caption">
+    <figcaption class="mt-2 text-sm text-gray-300 blockquote-caption">
       {{ . | safeHTML }}
     </figcaption>
   {{ end }}
-</figure>
+{{ else }}
+  <figure
+    class="rounded-lg bg-primary-dark/40 text-white p-1 border-l-6 border-white"
+  >
+    <blockquote {{ with .Attributes.cite }}cite="{{ . }}"{{ end }}>
+      {{ .Text }}
+    </blockquote>
+    {{ with .Attributes.caption }}
+      <figcaption class="ml-4 mb-4">
+        {{ . | safeHTML }}
+      </figcaption>
+    {{ end }}
+  </figure>
+{{ end }}

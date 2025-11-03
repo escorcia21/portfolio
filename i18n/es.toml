@@ -67,3 +67,18 @@ other = "Siguiente"
 
 [olderPosts]
 other = "Publicaciones más antiguas"
+
+[note]
+other = "Nota"
+
+[tip]
+other = "Consejo"
+
+[quote]
+other = "Cita"
+
+[warning]
+other = "Advertencia"
+
+[alert]
+other = "Alerta"
