@@ -8,6 +8,14 @@ defaultContentLanguage = "en"
   favicon = "images/favicon.svg"
   
 [languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+
+  [languages.es]
+    languageName = "Español"
+    weight = 2
+  
   [languages.en.menu]
     [[languages.en.menu.header]]
       name = "blog"
