@@ -1,0 +1,13 @@
+<figure class="mx-auto">
+  <img
+    loading="lazy"
+    class="h-auto max-w-full rounded-lg shadow-xl dark:shadow-gray-800"
+    src="{{ .Destination | safeURL }}"
+    {{- with .PlainText }}alt="{{ . }}"{{ end -}}
+  />
+  {{- with .Title }}
+    <figcaption class="mt-2 text-sm text-center">
+      {{ . }}
+    </figcaption>
+  {{ end -}}
+</figure>

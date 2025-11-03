@@ -259,4 +259,9 @@
         scrollbar-width: small;
         scrollbar-color: #a0a0a0 theme('colors.primary-dark');
     }
+
+    .medium-zoom-overlay,
+    .medium-zoom-image--opened {
+        z-index: 999;
+    }
 }

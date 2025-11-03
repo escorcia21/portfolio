@@ -33,5 +33,17 @@
         ]);
       </script>
     {{ end }}
+
+    {{ if or (.Content | findRE "<img") (.Resources.ByType "image") }}
+      <script type="module">
+        import { default as mediumZoom } from "https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.esm.min.js";
+
+        mediumZoom(".prose img, article img", {
+          margin: 24,
+          background: "rgba(0,0,0,0.8)",
+        });
+      </script>
+    {{ end }}
+
   </body>
 </html>

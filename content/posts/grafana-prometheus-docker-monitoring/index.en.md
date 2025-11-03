@@ -371,6 +371,29 @@ Then open:
 
 Log in using your `.env` credentials and you’ll find Grafana **already connected to Prometheus**, displaying live metrics from your Docker containers
 
+![Grafana login screen at localhost:3000](grafana-login.png "Grafana Login Screen")
+
+---
+
+#### Viewing Your Metrics
+
+After logging into Grafana:
+
+1. Navigate to **Dashboards → Monitoring → Docker Container & Host Metrics**.
+2. This pre-configured dashboard (provisioned automatically) is already connected to Prometheus.
+
+![Pre-configured Docker Container & Host Metrics dashboard](grafana-dashboards.png "Pre-configured Docker Container & Host Metrics dashboard")
+
+Here you'll find detailed, real-time insights into your containers, such as:
+
+- CPU usage per container
+- Memory utilization
+- Network traffic
+
+![Real-time CPU, memory, and network metrics per container](grafana-docker-containers-1.png "Real-time CPU, memory, and network metrics per container")
+
+![Additional container performance metrics and statistics](grafana-docker-containers-2.png "Additional container performance metrics and statistics")
+
 ---
 
 ## Service 4: MySQL
