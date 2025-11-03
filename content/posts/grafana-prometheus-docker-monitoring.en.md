@@ -6,7 +6,7 @@ description = "Learn how to build a complete Docker monitoring stack using Prome
 tags = ["grafana", "prometheus", "docker", "monitoring", "observability"]
 +++
 
-## 🎯 Introduction: Why Monitoring Matters
+## Introduction: Why Monitoring Matters
 
 At some point in the development process, every team faces challenges related to performance and availability.
 To take the right actions and iterate effectively, we need data — without it, we can’t truly understand the root cause of an issue.
@@ -26,7 +26,7 @@ Having a centralized place to visualize metrics not only saves time but also emp
 
 ---
 
-## 📚 Series Overview: What You'll Learn
+## Series Overview: What You'll Learn
 
 In this series of posts, you'll learn how to set up a monitoring dashboard using:
 
@@ -40,45 +40,45 @@ In the second part, we’ll take it a step further by integrating server logs di
 
 ---
 
-Now that you know what you’ll learn, let’s look at what you’ll actually build and the components that make up your monitoring stack. 👇
+Now that you know what you’ll learn, let’s look at what you’ll actually build and the components that make up your monitoring stack.
 
 ---
 
-### 🔧 Components Overview
+### Components Overview
 
-- 📊 **Prometheus** — collects and stores container metrics.
-- 📦 **cAdvisor** — exposes per-container CPU, memory, disk, and network statistics.
-- 📊 **Grafana** — visualizes those metrics, builds dashboards, and creates alerts.
-- 🗄️ **MySQL** — serves as the database for our sample app.
-- 💎 **Rails To-Do App** — demonstrates how to monitor a real running service.
+- **Prometheus** — collects and stores container metrics.
+- **cAdvisor** — exposes per-container CPU, memory, disk, and network statistics.
+- **Grafana** — visualizes those metrics, builds dashboards, and creates alerts.
+- **MySQL** — serves as the database for our sample app.
+- **Rails To-Do App** — demonstrates how to monitor a real running service.
 
 ---
 
-### 📁 Project Structure
+### Project Structure
 
 In your working directory (for example, `monitoring_stack/`), create the following structure:
 
-| File / Folder      | 📋 Purpose                                                                                                |
-| ------------------ | --------------------------------------------------------------------------------------------------------- |
-| **.env**           | 🔐 Holds sensitive credentials for Grafana and MySQL — make sure to keep this **out of version control**. |
-| **compose.yml**    | 🧠 Docker Compose configuration defining all services and how they interact.                              |
-| **prometheus.yml** | 🧮 Prometheus scrape configuration that defines targets (like cAdvisor) to collect metrics from.          |
-| **grafana/**       | 📊 Contains Grafana provisioning files — such as `datasource.yml` and `dashboard.json`.                   |
-| **db_data/**       | 💾 Persistent volume for MySQL data (automatically created when containers run).                          |
-| **todo_app/**      | 🧰 Sample Rails application cloned from a public repository to demonstrate app monitoring.                |
+| File / Folder      | Purpose                                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| **.env**           | Holds sensitive credentials for Grafana and MySQL — make sure to keep this **out of version control**. |
+| **compose.yml**    | Docker Compose configuration defining all services and how they interact.                              |
+| **prometheus.yml** | Prometheus scrape configuration that defines targets (like cAdvisor) to collect metrics from.          |
+| **grafana/**       | Contains Grafana provisioning files — such as `datasource.yml` and `dashboard.json`.                   |
+| **db_data/**       | Persistent volume for MySQL data (automatically created when containers run).                          |
+| **todo_app/**      | Sample Rails application cloned from a public repository to demonstrate app monitoring.                |
 
 ---
 
-## 📊 Service 1: Prometheus
+## Service 1: Prometheus
 
-### 🔍 What Is Prometheus?
+### What Is Prometheus?
 
 Prometheus is an **open-source monitoring and alerting system** designed to collect, store, and query **time-series metrics** — data that changes over time (like CPU, memory, or request counts).
 It was originally developed at SoundCloud and is now part of the **Cloud Native Computing Foundation (CNCF)** alongside Kubernetes.
 
 ---
 
-### ⚡ How It Works
+### How It Works
 
 Prometheus **pulls metrics** from services (via `/metrics`) at regular intervals and stores them in a **time-series database (TSDB)** for querying and alerts.
 
@@ -93,7 +93,7 @@ It collects metrics like:
 
 ---
 
-### 🐳 Prometheus in `compose.yml`
+### Prometheus in `compose.yml`
 
 ```yaml
 services:
@@ -124,7 +124,7 @@ networks:
 
 ---
 
-### 📘 Configuration Breakdown
+### Configuration Breakdown
 
 | Key / Section             | Description                                                                                                                   |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -139,16 +139,16 @@ networks:
 
 ---
 
-## 📈 Service 2: cAdvisor
+## Service 2: cAdvisor
 
-### 🔍 What Is cAdvisor?
+### What Is cAdvisor?
 
 **cAdvisor (Container Advisor)** — built by Google — is a lightweight monitoring agent that tracks real-time resource usage for Docker containers, including **CPU, memory, disk I/O, and network activity**.
 Think of it as a sensor that continuously reports how each container is performing.
 
 ---
 
-### 🎯 Why We Need It
+### Why We Need It
 
 Prometheus only scrapes metrics from services that **expose `/metrics`**, but Docker doesn’t — that’s where **cAdvisor** helps.
 
@@ -166,7 +166,7 @@ Without it:
 
 ---
 
-### 🐳 cAdvisor in `compose.yml`
+### cAdvisor in `compose.yml`
 
 ```yaml
 services:
@@ -197,7 +197,7 @@ services:
 
 ---
 
-### 📘 Configuration Breakdown – cAdvisor
+### Configuration Breakdown – cAdvisor
 
 | Key / Section       | Description                                                                                                |
 | ------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -214,7 +214,7 @@ services:
 
 ---
 
-### ⚙️ Adding cAdvisor as a Prometheus Target
+### Adding cAdvisor as a Prometheus Target
 
 ```yaml
 # ===========================
@@ -230,7 +230,7 @@ scrape_configs:
 
 ---
 
-### 📘 Configuration Breakdown
+### Configuration Breakdown
 
 | Key / Field         | Description                                                                                                              |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -245,14 +245,14 @@ After saving, run:
 docker compose up -d
 ```
 
-✅ Access Prometheus → [http://localhost:9090](http://localhost:9090)
-✅ Access cAdvisor → [http://localhost:8080](http://localhost:8080)
+Access Prometheus → [http://localhost:9090](http://localhost:9090)
+Access cAdvisor → [http://localhost:8080](http://localhost:8080)
 
 Prometheus will now start collecting container metrics — ready to be visualized in Grafana.
 
 ---
 
-## 📊 Service 3: Grafana
+## Service 3: Grafana
 
 Now that **Prometheus** is collecting container metrics via **cAdvisor**, it’s time to **visualize them** — and that’s where **Grafana** comes in.
 
@@ -260,8 +260,8 @@ Grafana provides a **powerful and flexible dashboard interface** that lets us ex
 
 To make setup easier, we’ll clone a repository that already contains the **Grafana provisioning files** — these define:
 
-- ⚙️ The **data source configuration**, so Grafana automatically connects to Prometheus.
-- 📊 The **default dashboard**, so we can see our container metrics without manually creating panels.
+- The **data source configuration**, so Grafana automatically connects to Prometheus.
+- The **default dashboard**, so we can see our container metrics without manually creating panels.
 
 ```bash
 git clone https://github.com/escorcia21/grafana.git
@@ -269,7 +269,7 @@ git clone https://github.com/escorcia21/grafana.git
 
 ---
 
-### 🧩 Adding Grafana to the Compose File
+### Adding Grafana to the Compose File
 
 Next, we’ll update our `compose.yml` file to include the **Grafana service**.
 
@@ -315,7 +315,7 @@ volumes:
 
 ---
 
-### 🔍 Configuration Breakdown
+### Configuration Breakdown
 
 | Key                         | Description                                                                                                                                                |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -328,7 +328,7 @@ volumes:
 
 ---
 
-### 🔐 Setting Up the `.env` File
+### Setting Up the `.env` File
 
 Before starting the containers, we’ll configure the `.env` file — which stores **sensitive credentials** outside of our main codebase.
 
@@ -339,12 +339,12 @@ GRAFANA_USER=admin
 GRAFANA_PASSWORD=supersecret
 ```
 
-> 💡 Feel free to customize these values.
+> Feel free to customize these values.
 > Remember to **add `.env` to your `.gitignore`** so it doesn’t get pushed to version control.
 
 ---
 
-### 🚀 Launching the Stack
+### Launching the Stack
 
 Once everything is ready, bring the stack up with:
 
@@ -354,25 +354,25 @@ docker compose up -d
 
 This will:
 
-- 🧠 Start **cAdvisor** (collecting container metrics)
-- 📈 Start **Prometheus** (storing and scraping metrics)
-- 📊 Start **Grafana** (visualizing them beautifully, using your `.env` credentials)
+- Start **cAdvisor** (collecting container metrics)
+- Start **Prometheus** (storing and scraping metrics)
+- Start **Grafana** (visualizing them beautifully, using your `.env` credentials)
 
 Then open:
-👉 **[http://localhost:3000](http://localhost:3000)**
+**[http://localhost:3000](http://localhost:3000)**
 
-Log in using your `.env` credentials and you’ll find Grafana **already connected to Prometheus**, displaying live metrics from your Docker containers 🎉
+Log in using your `.env` credentials and you’ll find Grafana **already connected to Prometheus**, displaying live metrics from your Docker containers
 
 ---
 
-## 💾 Service 4: MySQL
+## Service 4: MySQL
 
 Now that our monitoring stack is ready, let’s add a **database service** that we’ll later use with our application.
 We’ll use **MySQL**, one of the most popular relational databases, and configure it to connect seamlessly with the rest of our containers.
 
 ---
 
-### 🗝️ Updating the `.env` File
+### Updating the `.env` File
 
 Let’s expand our `.env` file to include the database credentials.
 Add the following lines below your Grafana variables:
@@ -388,12 +388,12 @@ DB_PASSWORD=supersecret
 DB_NAME=todo_app
 ```
 
-💡 **Tip:** Feel free to adjust these values as needed — especially `DB_PASSWORD`.
+**Tip:** Feel free to adjust these values as needed — especially `DB_PASSWORD`.
 Remember to keep your `.env` file private by adding it to `.gitignore`.
 
 ---
 
-### ⚙️ Adding the MySQL Service
+### Adding the MySQL Service
 
 Next, define the new **MySQL container** inside your `compose.yml` file:
 
@@ -452,23 +452,23 @@ services:
 # ===========================
 ```
 
-#### 🔍 Let’s Break It Down
+#### Let’s Break It Down
 
-- 🐋 **image:** Uses the official MySQL image from Docker Hub.
-- 🏷️ **container_name:** Names the container `db` for easy reference.
-- 🔁 **restart:** Automatically restarts if it stops unexpectedly.
-- 💾 **volumes:** Persists data locally in the `db_data` folder.
-- 🔐 **environment:** Loads credentials from the `.env` file.
-- 🌍 **ports:** Exposes MySQL on port `3306`.
-- 🔗 **networks:** Connects this container to both:
+- **image:** Uses the official MySQL image from Docker Hub.
+- **container_name:** Names the container `db` for easy reference.
+- **restart:** Automatically restarts if it stops unexpectedly.
+- **volumes:** Persists data locally in the `db_data` folder.
+- **environment:** Loads credentials from the `.env` file.
+- **ports:** Exposes MySQL on port `3306`.
+- **networks:** Connects this container to both:
   - `monitoring` → visible in the monitoring stack.
   - `application` → for secure app-to-database communication.
 
-- 💓 **healthcheck:** Verifies that MySQL is healthy before other services connect.
+- **healthcheck:** Verifies that MySQL is healthy before other services connect.
 
 ---
 
-### 🌐 Adding the New Network
+### Adding the New Network
 
 At the bottom of your `compose.yml`, define an additional network:
 
@@ -487,7 +487,7 @@ This creates a **second bridge network** for your app and database — keeping a
 
 ---
 
-### 🚀 Spinning Everything Up
+### Spinning Everything Up
 
 Once everything is ready, run:
 
@@ -495,23 +495,23 @@ Once everything is ready, run:
 docker compose up -d
 ```
 
-✅ **Now you’ll have:**
+**Now you’ll have:**
 
 - Prometheus gathering metrics
 - cAdvisor exposing container data
 - Grafana visualizing everything
-- MySQL running and waiting for your application 🎉
+- MySQL running and waiting for your application
 
 ---
 
-## ⚡ Service 5: Rails App
+## Service 5: Rails App
 
 Now that our database is up, let’s bring in the **application layer** — a simple **Rails “To-Do” app** that connects to MySQL.
 Later, we’ll monitor it through Prometheus and Grafana.
 
 ---
 
-### 📦 Cloning the App
+### Cloning the App
 
 Clone the repository that contains the Rails Todo app:
 
@@ -521,7 +521,7 @@ git clone https://github.com/escorcia21/todo_app.git
 
 ---
 
-### ⚙️ Adding the Rails Service
+### Adding the Rails Service
 
 Now, define the **Rails container** in your `compose.yml`:
 
@@ -572,21 +572,21 @@ services:
 # ===========================
 ```
 
-#### 🔍 Explanation
+#### Explanation
 
-- 🧱 **build:** Builds the image using the `Dockerfile` in `todo_app`.
-- 🏷️ **container_name:** Names the container `rails`.
-- 🌍 **ports:** Maps port `80` to the host’s port `80` → visit [http://localhost](http://localhost).
-- 🔗 **networks:** Connects to both:
-  - `application` → for DB connection.
-  - `monitoring` → for metric visibility later.
+- **build:** Builds the image using the `Dockerfile` in `todo_app`.
+- **container_name:** Names the container `rails`.
+- **ports:** Maps port `80` to the host’s port `80` → visit [http://localhost](http://localhost).
+- **networks:** Connects to both:
+- `application` → for DB connection.
+- `monitoring` → for metric visibility later.
 
-- ⚙️ **environment:** Injects variables from the `.env` file.
-- 🕒 **depends_on:** Waits for MySQL to be healthy before starting Rails.
+- **environment:** Injects variables from the `.env` file.
+- **depends_on:** Waits for MySQL to be healthy before starting Rails.
 
 ---
 
-### 🔐 Updating the `.env` File
+### Updating the `.env` File
 
 Extend your `.env` file to include the Rails variables:
 
@@ -597,12 +597,12 @@ RAILS_ENV=development
 SECRET_KEY_BASE=$(openssl rand -hex 32)
 ```
 
-💡 **Note:** The `SECRET_KEY_BASE` is used by Rails for encrypting cookies and sessions.
+**Note:** The `SECRET_KEY_BASE` is used by Rails for encrypting cookies and sessions.
 Generate it using the command above.
 
 ---
 
-### 🚀 Launching Everything
+### Launching Everything
 
 Now you can build and launch the **entire stack**:
 
@@ -612,24 +612,24 @@ docker compose up -d --build
 
 This will:
 
-- 🧱 Build and start your Rails app
-- 🗃️ Start MySQL, Prometheus, cAdvisor, and Grafana
-- 🔗 Connect everything through the proper networks
+- Build and start your Rails app
+- Start MySQL, Prometheus, cAdvisor, and Grafana
+- Connect everything through the proper networks
 
 Open your browser and visit:
 
-👉 **[http://localhost/todos](http://localhost/todos)**
+**[http://localhost/todos](http://localhost/todos)**
 
 You should see your **Rails Todo app** running successfully! 🙌
 
 ---
 
-## 🧩 Final Wrap-Up
+## Final Wrap-Up
 
-🎉 **Congratulations!**
+**Congratulations!**
 You’ve built a complete **container monitoring and observability stack** using **Docker**, **Prometheus**, **cAdvisor**, **Grafana**, and a sample **Rails app**.
 
-## 🧠 Architecture Overview
+## Architecture Overview
 
 Here’s how everything fits together:
 
@@ -659,11 +659,11 @@ architecture-beta
 
 ---
 
-## 📊 Going Further with Grafana
+## Going Further with Grafana
 
 Now that Grafana is connected to Prometheus, you can expand your observability setup in several ways:
 
-### 🧩 1. Create Custom Dashboards
+### Create Custom Dashboards
 
 Design dashboards that reflect **your system’s unique metrics**.
 In Grafana:
@@ -671,7 +671,7 @@ In Grafana:
 - Go to **“+ New → Dashboard”**
 - Add panels using **PromQL** to visualize metrics like container CPU usage, request latency, or memory trends.
 
-### 🌍 2. Import Community Dashboards
+### Import Community Dashboards
 
 Leverage Grafana’s massive community library at [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards).
 Import a dashboard by going to:
@@ -680,7 +680,7 @@ You’ll find prebuilt visualizations for Prometheus, Docker, MySQL, and many mo
 
 ---
 
-## 🚨 3. Set Up Alerts and Rules
+## Set Up Alerts and Rules
 
 Monitoring isn’t complete without **alerts**.
 Grafana and Prometheus let you define conditions to **notify you automatically** when something goes wrong.
@@ -693,22 +693,22 @@ In Grafana:
    - Database latency > 300ms
 
 3. Send alerts via:
-   - 📧 Email
-   - 💬 Slack / Discord / Microsoft Teams
-   - 📱 PagerDuty or webhooks
+   - Email
+   - Slack / Discord / Microsoft Teams
+   - PagerDuty or webhooks
 
 This transforms your dashboard into a **proactive observability system** that warns you before issues escalate.
 
 ---
 
-## 🚀 Final Thoughts
+## Final Thoughts
 
 With this setup, you now have:
 
-- 🔍 Full visibility into containers and app performance
-- ⚡ Real-time dashboards and alerting
-- 🧠 A scalable, modular observability stack
-- 🌐 The flexibility to connect more data sources as your system grows
+- Full visibility into containers and app performance
+- Real-time dashboards and alerting
+- A scalable, modular observability stack
+- The flexibility to connect more data sources as your system grows
 
 Grafana’s blend of dashboards, alerts, and integrations makes it a **powerful observability hub** — ideal for both **development** and **production environments**.
 

@@ -1,0 +1,9 @@
+{{ if eq .Level 2 }}
+  <h{{ .Level }} id="{{ .Anchor }}" class="pl-2 my-2 border-l-4 border-l-border-accent">
+    {{ .Text | safeHTML }}
+  </h{{ .Level }}>
+{{ else }}
+  <h{{ .Level }} id="{{ .Anchor }}">
+    {{ .Text | safeHTML }}
+  </h{{ .Level }}>
+{{ end }}
