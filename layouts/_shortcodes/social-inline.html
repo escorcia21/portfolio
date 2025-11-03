@@ -1,0 +1,27 @@
+{{ $authorData := index site.Data .Page.Language.Lang "author" }}
+{{ $author := cond (and $authorData $authorData.author) $authorData.author site.Params }}
+
+{{ $github := $author.github }}
+{{ $linkedin := $author.linkedin }}
+
+{{ if or $github $linkedin }}
+  <span>
+    {{ with $linkedin }}
+      {{ partial "components/link-with-arrow" (dict
+        "href" .
+        "text" "LinkedIn"
+        "class" "no-underline"
+        )
+      }}
+    {{ end }}
+    or
+    {{ with $github }}
+      {{ partial "components/link-with-arrow" (dict
+        "href" .
+        "text" "GitHub"
+        "class" "no-underline"
+        )
+      }}
+    {{ end }}
+  </span>
+{{ end }}

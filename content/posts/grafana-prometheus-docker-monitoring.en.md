@@ -73,18 +73,19 @@ In your working directory (for example, `monitoring_stack/`), create the followi
 
 ### What Is Prometheus?
 
-Prometheus is an **open-source monitoring and alerting system** designed to collect, store, and query **time-series metrics** — data that changes over time (like CPU, memory, or request counts).
-It was originally developed at SoundCloud and is now part of the **Cloud Native Computing Foundation (CNCF)** alongside Kubernetes.
+<!-- prettier-ignore -->
+> [Prometheus](https://github.com/prometheus) is an open-source systems monitoring and alerting toolkit originally built at [SoundCloud](http://soundcloud.com). Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user [community](/community/). It is now a standalone open source project and maintained independently of any company. To emphasize this, and to clarify the project's governance structure, Prometheus joined the [Cloud Native Computing Foundation](https://cncf.io/) in 2016 as the second hosted project, after [Kubernetes](http://kubernetes.io/).  
+{cite="https://prometheus.io/docs/introduction/overview/" caption="Prometheus Documentation: Overview"}
 
 ---
 
 ### How It Works
 
-Prometheus **pulls metrics** from services (via `/metrics`) at regular intervals and stores them in a **time-series database (TSDB)** for querying and alerts.
+Prometheus **pulls metrics** from [**exporters**](https://prometheus.io/docs/instrumenting/exporters/) which are servers, containers, or apps that expose data via the `/metrics` endpoint. These metrics are stored in a **time-series database (TSDB)** for queries and alerts.
 
-You can **analyze data with PromQL**, **visualize it in Grafana**, and **trigger alerts** through Alertmanager.
+You can explore data with [**PromQL**](https://prometheus.io/docs/prometheus/latest/querying/basics/), visualize it in **Grafana**, and send **alerts** using Alertmanager.
 
-It collects metrics like:
+It tracks metrics such as:
 
 - CPU, memory, and network usage
 - HTTP requests and errors
@@ -94,6 +95,8 @@ It collects metrics like:
 ---
 
 ### Prometheus in `compose.yml`
+
+The first thing we need to do is define the **Prometheus service** in our `compose.yml` file:
 
 ```yaml
 services:
@@ -126,16 +129,16 @@ networks:
 
 ### Configuration Breakdown
 
-| Key / Section             | Description                                                                                                                   |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **image**                 | Pulls the latest official Prometheus image from Docker Hub.                                                                   |
-| **container_name**        | Names the container `prometheus` — easier to identify and reference.                                                          |
-| **ports**                 | Maps container port `9090` (Prometheus UI) to host port `9090`, accessible at [http://localhost:9090](http://localhost:9090). |
-| **networks**              | Connects to the `monitoring` network so Prometheus can reach cAdvisor and Grafana.                                            |
-| **command**               | Points Prometheus to the main configuration file (`/etc/prometheus/prometheus.yml`).                                          |
-| **volumes**               | Mounts the local `prometheus.yml` file as **read-only**, ensuring configuration persistence and security.                     |
-| **depends_on**            | Ensures **cAdvisor** starts first, so Prometheus can discover it as a target during startup.                                  |
-| **networks → monitoring** | Defines a **custom bridge network** for communication between monitoring services (Prometheus, Grafana, cAdvisor).            |
+| Key / Section             | Description                                                                                                                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **image**                 | Pulls the latest official Prometheus image from Docker Hub.                                                                                                                  |
+| **container_name**        | Names the container `prometheus` — easier to identify and reference.                                                                                                         |
+| **ports**                 | Maps container port `9090` (Prometheus UI) to host port `9090`, accessible at [localhost:9090](http://localhost:9090).                                                       |
+| **networks**              | Connects to the `monitoring` network so Prometheus can reach cAdvisor and Grafana.                                                                                           |
+| **command**               | Points Prometheus to the main configuration file (`/etc/prometheus/prometheus.yml`).                                                                                         |
+| **volumes**               | Mounts the local `prometheus.yml` file as **read-only**, ensuring configuration persistence and security.                                                                    |
+| **depends_on**            | Ensures **cAdvisor** starts first, so Prometheus can discover it as a target during startup.                                                                                 |
+| **networks → monitoring** | Defines a [**custom bridge network**](https://docs.docker.com/engine/network/drivers/bridge/) for communication between monitoring services (Prometheus, Grafana, cAdvisor). |
 
 ---
 
@@ -143,30 +146,21 @@ networks:
 
 ### What Is cAdvisor?
 
-**cAdvisor (Container Advisor)** — built by Google — is a lightweight monitoring agent that tracks real-time resource usage for Docker containers, including **CPU, memory, disk I/O, and network activity**.
-Think of it as a sensor that continuously reports how each container is performing.
+<!-- prettier-ignore -->
+> [**cAdvisor**](https://github.com/google/cadvisor) (Container Advisor) provides container users an understanding of the resource usage and performance characteristics of their running containers. It is a running daemon that collects, aggregates, processes, and exports information about running containers. Specifically, for each container it keeps resource isolation parameters, historical resource usage, histograms of complete historical resource usage and network statistics. This data is exported by container and machine-wide.
+{cite="https://github.com/google/cadvisor" caption="cAdvisor GitHub Repository"}
 
 ---
 
 ### Why We Need It
 
-Prometheus only scrapes metrics from services that **expose `/metrics`**, but Docker doesn’t — that’s where **cAdvisor** helps.
-
-**cAdvisor:**
-
-- Collects container and system metrics
-- Exposes them at `http://localhost:8080/metrics`
-- Lets Prometheus scrape and Grafana visualize them
-
-Without it:
-
-- No container CPU, RAM, or network data
-- Empty Grafana dashboards
-- No visibility into container performance
+Prometheus can only scrape metrics from services that expose a `/metrics` endpoint, but Docker doesn’t provide one by default. That’s where **cAdvisor** comes in. It collects container metrics, exposes them at [**localhost:8080/metrics**](http://localhost:8080/metrics), and allows Prometheus to scrape the data for visualization in Grafana.
 
 ---
 
 ### cAdvisor in `compose.yml`
+
+In order to add cAdvisor to our monitoring stack, we need to define it in the `compose.yml` file, just below the Prometheus service:
 
 ```yaml
 services:
@@ -197,24 +191,26 @@ services:
 
 ---
 
-### Configuration Breakdown – cAdvisor
+### Configuration Breakdown
 
-| Key / Section       | Description                                                                                                |
-| ------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **image**           | Uses the official **Google cAdvisor** image (`gcr.io/cadvisor/cadvisor:latest`).                           |
-| **container_name**  | Names the container `cadvisor` for easier identification.                                                  |
-| **ports**           | Maps port `8080` (cAdvisor UI) to the host — accessible at [http://localhost:8080](http://localhost:8080). |
-| **networks**        | Connects to the shared `monitoring` network, allowing Prometheus to scrape its metrics.                    |
-| **volumes**         | Mounts host directories to allow system-level monitoring and Docker visibility:                            |
-| ├ `/`               | Root filesystem (read-only) — provides full host context.                                                  |
-| ├ `/var/run`        | Enables Docker socket communication (read/write).                                                          |
-| ├ `/sys`            | Exposes kernel statistics (read-only).                                                                     |
-| ├ `/var/lib/docker` | Gives access to container metadata for per-container stats.                                                |
-| └ `/dev/disk`       | Provides disk I/O and usage information (read-only).                                                       |
+| Key / Section       | Description                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **image**           | Pulls the latest official **Google cAdvisor** image from Docker Hub.                                                     |
+| **container_name**  | Names the container `cadvisor` - easier to identify and reference.                                                       |
+| **ports**           | Maps container port `8080` (cAdvisor UI) to the host port `8080`, accessible at [localhost:8080](http://localhost:8080). |
+| **networks**        | Connects to the shared `monitoring` network, allowing Prometheus to scrape its metrics.                                  |
+| **volumes**         | Mounts host directories to allow monitoring and Docker visibility:                                                       |
+| ├ `/`               | Root filesystem (read-only) — provides full host context.                                                                |
+| ├ `/var/run`        | Enables Docker socket communication (read/write).                                                                        |
+| ├ `/sys`            | Exposes kernel statistics (read-only).                                                                                   |
+| ├ `/var/lib/docker` | Gives access to container metadata for per-container stats.                                                              |
+| └ `/dev/disk`       | Provides disk I/O and usage information (read-only).                                                                     |
 
 ---
 
 ### Adding cAdvisor as a Prometheus Target
+
+In order for Prometheus to start scraping metrics from cAdvisor, we need to add it as a **scrape target** in the `prometheus.yml` file:
 
 ```yaml
 # ===========================
@@ -228,25 +224,29 @@ scrape_configs:
           - cadvisor:8080 # cAdvisor service endpoint
 ```
 
+> [!NOTE]
+> 💡 **Note:** In the Prometheus target configuration, `cadvisor:8080` refers to the **service name** and **port** defined in the **Docker Compose** file.
+> All services within the same **Docker network** can communicate using their **service names** and **ports** instead of IP addresses.
+
 ---
 
 ### Configuration Breakdown
 
-| Key / Field         | Description                                                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **job_name**        | Identifies this scrape job. Appears in Prometheus UI and helps organize metrics by source.                               |
-| **scrape_interval** | Defines how often Prometheus scrapes metrics — here, every **5 seconds**.                                                |
-| **static_configs**  | Manually specifies targets instead of service discovery.                                                                 |
-| **targets**         | List of endpoints exposing metrics. In this case, `cadvisor:8080` — the service name and port defined in Docker Compose. |
+| Key / Field         | Description                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------ |
+| **job_name**        | Identifies this scrape job. Appears in Prometheus UI and helps organize metrics by source. |
+| **scrape_interval** | Defines how often Prometheus scrapes metrics — here, every **5 seconds**.                  |
+| **static_configs**  | Manually specifies targets instead of service discovery.                                   |
+| **targets**         | List of endpoints exposing metrics. In this case, `cadvisor:8080`                          |
 
-After saving, run:
+After saving, we can now launch both Prometheus and cAdvisor together:
 
 ```bash
 docker compose up -d
 ```
 
-Access Prometheus → [http://localhost:9090](http://localhost:9090)
-Access cAdvisor → [http://localhost:8080](http://localhost:8080)
+Access Prometheus → [localhost:9090](http://localhost:9090)
+Access cAdvisor → [localhost:8080](http://localhost:8080)
 
 Prometheus will now start collecting container metrics — ready to be visualized in Grafana.
 
@@ -258,10 +258,17 @@ Now that **Prometheus** is collecting container metrics via **cAdvisor**, it’s
 
 Grafana provides a **powerful and flexible dashboard interface** that lets us explore metrics in real time.
 
-To make setup easier, we’ll clone a repository that already contains the **Grafana provisioning files** — these define:
+To make setup easier, we’ll clone a repository that already contains the **Grafana provisioning files** which define:
 
 - The **data source configuration**, so Grafana automatically connects to Prometheus.
 - The **default dashboard**, so we can see our container metrics without manually creating panels.
+
+Here’s your text rewritten as a clear, polished **information section** in Markdown style (perfect for tutorials or docs):
+
+> [!NOTE]
+> ℹ️ **Info:**
+> For this tutorial, I imported a **pre-configured Grafana dashboard** that visualizes Docker container metrics collected by Prometheus.
+> You can check it out here: [Docker Host & Container Overview Dashboard (ID: 10619)](https://grafana.com/grafana/dashboards/10619-docker-host-container-overview/)
 
 ```bash
 git clone https://github.com/escorcia21/grafana.git
@@ -321,7 +328,7 @@ volumes:
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **image**                   | Uses the official Grafana image from Docker Hub.                                                                                                           |
 | **environment**             | Loads admin credentials from the `.env` file and disables new user sign-ups for security.                                                                  |
-| **ports**                   | Maps Grafana’s default port (`3000`) so it’s accessible at [http://localhost:3000](http://localhost:3000).                                                 |
+| **ports**                   | Maps Grafana’s default port (`3000`) so it’s accessible at [localhost:3000](http://localhost:3000).                                                        |
 | **volumes**                 | - `grafana_storage` persists dashboards and settings.<br> - `./grafana/provisioning` mounts preconfigured data source & dashboard files in read-only mode. |
 | **restart: unless-stopped** | Ensures Grafana restarts automatically unless manually stopped.                                                                                            |
 | **networks: monitoring**    | Lets Grafana communicate with Prometheus and cAdvisor containers.                                                                                          |
@@ -339,6 +346,7 @@ GRAFANA_USER=admin
 GRAFANA_PASSWORD=supersecret
 ```
 
+> [!WARNING]
 > Feel free to customize these values.
 > Remember to **add `.env` to your `.gitignore`** so it doesn’t get pushed to version control.
 
@@ -359,7 +367,7 @@ This will:
 - Start **Grafana** (visualizing them beautifully, using your `.env` credentials)
 
 Then open:
-**[http://localhost:3000](http://localhost:3000)**
+**[localhost:3000](http://localhost:3000)**
 
 Log in using your `.env` credentials and you’ll find Grafana **already connected to Prometheus**, displaying live metrics from your Docker containers
 
@@ -388,14 +396,15 @@ DB_PASSWORD=supersecret
 DB_NAME=todo_app
 ```
 
-**Tip:** Feel free to adjust these values as needed — especially `DB_PASSWORD`.
-Remember to keep your `.env` file private by adding it to `.gitignore`.
+> [!TIP]
+> **Tip:** Feel free to adjust these values as needed, especially `DB_PASSWORD`.
+> Remember to keep your `.env` file private by adding it to `.gitignore`.
 
 ---
 
 ### Adding the MySQL Service
 
-Next, define the new **MySQL container** inside your `compose.yml` file:
+Next, let's define the new **MySQL container** inside your `compose.yml` file:
 
 ```yaml
 services:
@@ -452,25 +461,24 @@ services:
 # ===========================
 ```
 
-#### Let’s Break It Down
+### Configuration Breakdown
 
-- **image:** Uses the official MySQL image from Docker Hub.
-- **container_name:** Names the container `db` for easy reference.
-- **restart:** Automatically restarts if it stops unexpectedly.
-- **volumes:** Persists data locally in the `db_data` folder.
-- **environment:** Loads credentials from the `.env` file.
-- **ports:** Exposes MySQL on port `3306`.
-- **networks:** Connects this container to both:
-  - `monitoring` → visible in the monitoring stack.
-  - `application` → for secure app-to-database communication.
-
-- **healthcheck:** Verifies that MySQL is healthy before other services connect.
+| **Key**            | **Description**                                                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **image**          | Uses the official MySQL image from Docker Hub.                                                                                          |
+| **container_name** | Names the container `db` for easy reference.                                                                                            |
+| **restart**        | Automatically restarts if it stops unexpectedly.                                                                                        |
+| **volumes**        | Persists data locally in the `db_data` folder.                                                                                          |
+| **environment**    | Loads credentials from the `.env` file.                                                                                                 |
+| **ports**          | Exposes MySQL on port `3306`.                                                                                                           |
+| **networks**       | Connects this container to both: `monitoring` → visible in the monitoring stack, and `application` → for app-to-database communication. |
+| **healthcheck**    | Verifies that MySQL is healthy before other services connect.                                                                           |
 
 ---
 
 ### Adding the New Network
 
-At the bottom of your `compose.yml`, define an additional network:
+At the bottom of your `compose.yml`, define an additional network for application traffic:
 
 ```yaml
 # ===========================
@@ -483,7 +491,7 @@ networks:
     driver: bridge
 ```
 
-This creates a **second bridge network** for your app and database — keeping application traffic separate from monitoring traffic.
+This creates a **second bridge network** for your app and database, keeping application traffic.
 
 ---
 
@@ -507,13 +515,12 @@ docker compose up -d
 ## Service 5: Rails App
 
 Now that our database is up, let’s bring in the **application layer** — a simple **Rails “To-Do” app** that connects to MySQL.
-Later, we’ll monitor it through Prometheus and Grafana.
 
 ---
 
 ### Cloning the App
 
-Clone the repository that contains the Rails Todo app:
+Clone the repository that contains the Rails ToDo app:
 
 ```bash
 git clone https://github.com/escorcia21/todo_app.git
@@ -572,17 +579,16 @@ services:
 # ===========================
 ```
 
-#### Explanation
+### Configuration Breakdown
 
-- **build:** Builds the image using the `Dockerfile` in `todo_app`.
-- **container_name:** Names the container `rails`.
-- **ports:** Maps port `80` to the host’s port `80` → visit [http://localhost](http://localhost).
-- **networks:** Connects to both:
-- `application` → for DB connection.
-- `monitoring` → for metric visibility later.
-
-- **environment:** Injects variables from the `.env` file.
-- **depends_on:** Waits for MySQL to be healthy before starting Rails.
+| **Key**            | **Description**                                                                                                  |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| **build**          | Builds the image using the `Dockerfile` in the `todo_app` directory.                                             |
+| **container_name** | Names the container `rails`.                                                                                     |
+| **ports**          | Maps container port `80` to host port `80` → accessible at [localhost](http://localhost).                        |
+| **networks**       | Connects to both:<br>• `application` → for database connection.<br>• `monitoring` → for metric visibility later. |
+| **environment**    | Injects variables from the `.env` file.                                                                          |
+| **depends_on**     | Waits for MySQL to be healthy before starting the Rails container.                                               |
 
 ---
 
@@ -591,14 +597,24 @@ services:
 Extend your `.env` file to include the Rails variables:
 
 ```bash
+# Grafana credentials
+GRAFANA_USER=admin
+GRAFANA_PASSWORD=supersecret
+
+# MySQL credentials
+DB_USER=root
+DB_PASSWORD=supersecret
+DB_NAME=todo_app
+
 # Rails app
 DB_HOST=db
 RAILS_ENV=development
 SECRET_KEY_BASE=$(openssl rand -hex 32)
 ```
 
-**Note:** The `SECRET_KEY_BASE` is used by Rails for encrypting cookies and sessions.
-Generate it using the command above.
+> [!NOTE]
+> **Note:** The `SECRET_KEY_BASE` is used by Rails for encrypting cookies and sessions.
+> Generate it using the command above.
 
 ---
 
@@ -618,18 +634,18 @@ This will:
 
 Open your browser and visit:
 
-**[http://localhost/todos](http://localhost/todos)**
+**[localhost/todos](http://localhost/todos)**
 
 You should see your **Rails Todo app** running successfully! 🙌
 
+In the grafana dashboard at **[localhost:3000](http://localhost:3000)**, you can now monitor the performance of your Docker containers, including the Rails app and MySQL database.
+
 ---
 
-## Final Wrap-Up
+## Architecture Overview
 
 **Congratulations!**
 You’ve built a complete **container monitoring and observability stack** using **Docker**, **Prometheus**, **cAdvisor**, **Grafana**, and a sample **Rails app**.
-
-## Architecture Overview
 
 Here’s how everything fits together:
 
@@ -661,43 +677,9 @@ architecture-beta
 
 ## Going Further with Grafana
 
-Now that Grafana is connected to Prometheus, you can expand your observability setup in several ways:
+Grafana offers powerful ways to **customize your observability**. You can **create custom dashboards** for your system’s metrics or **import community ones**. It also supports **alerting rules** that notify you when metrics exceed defined thresholds, helping you react before issues escalate.
 
-### Create Custom Dashboards
-
-Design dashboards that reflect **your system’s unique metrics**.
-In Grafana:
-
-- Go to **“+ New → Dashboard”**
-- Add panels using **PromQL** to visualize metrics like container CPU usage, request latency, or memory trends.
-
-### Import Community Dashboards
-
-Leverage Grafana’s massive community library at [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards).
-Import a dashboard by going to:
-**Dashboards → New → Import → Enter Dashboard ID**.
-You’ll find prebuilt visualizations for Prometheus, Docker, MySQL, and many more.
-
----
-
-## Set Up Alerts and Rules
-
-Monitoring isn’t complete without **alerts**.
-Grafana and Prometheus let you define conditions to **notify you automatically** when something goes wrong.
-
-In Grafana:
-
-1. Go to **Alerting → Alert Rules → New Alert Rule**
-2. Define triggers like:
-   - CPU usage > 90% for 5 minutes
-   - Database latency > 300ms
-
-3. Send alerts via:
-   - Email
-   - Slack / Discord / Microsoft Teams
-   - PagerDuty or webhooks
-
-This transforms your dashboard into a **proactive observability system** that warns you before issues escalate.
+For detailed setup guides on dashboards, alerts, and integrations, check the [official Grafana documentation](https://grafana.com/docs/).
 
 ---
 
@@ -706,10 +688,9 @@ This transforms your dashboard into a **proactive observability system** that wa
 With this setup, you now have:
 
 - Full visibility into containers and app performance
-- Real-time dashboards and alerting
+- Real-time dashboards with the possibility to create alerts or your own metrics/dashboards
 - A scalable, modular observability stack
-- The flexibility to connect more data sources as your system grows
 
-Grafana’s blend of dashboards, alerts, and integrations makes it a **powerful observability hub** — ideal for both **development** and **production environments**.
+Feel free to expand this stack by adding more services, exporters, or integrating logging solutions.
 
-Your stack isn’t just monitoring — it’s **observing, analyzing, and responding** intelligently.
+This is my first of many posts I will be sharing. Feel free to reach out to me on {{< social-inline >}} if you have any questions or suggestions, and stay tuned for the next post where we’ll integrate logging into Grafana!

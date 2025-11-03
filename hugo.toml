@@ -58,6 +58,12 @@ defaultContentLanguage = "en"
   [markup.tableOfContents]
     startLevel = 2
     endLevel   = 2
+
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
     
 [outputs]
 home = ['html', 'rss']
