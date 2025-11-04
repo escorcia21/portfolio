@@ -11,9 +11,9 @@ tags = ["grafana", "prometheus", "docker", "monitoring", "observability"]
 At some point in the development process, every team faces challenges related to performance and availability.
 To take the right actions and iterate effectively, we need data — without it, we can’t truly understand the root cause of an issue.
 
-Is a specific service causing downtime?
-Where’s the memory leak?
-What’s slowing down response times?
+- Is a specific service causing downtime?
+- Where’s the memory leak?
+- What’s slowing down response times?
 
 This is where monitoring becomes essential.
 A solid monitoring setup helps you:
@@ -64,7 +64,6 @@ In your working directory (for example, `monitoring_stack/`), create the followi
 | **compose.yml**    | Docker Compose configuration defining all services and how they interact.                              |
 | **prometheus.yml** | Prometheus scrape configuration that defines targets (like cAdvisor) to collect metrics from.          |
 | **grafana/**       | Contains Grafana provisioning files — such as `datasource.yml` and `dashboard.json`.                   |
-| **db_data/**       | Persistent volume for MySQL data (automatically created when containers run).                          |
 | **todo_app/**      | Sample Rails application cloned from a public repository to demonstrate app monitoring.                |
 
 ---
@@ -74,7 +73,7 @@ In your working directory (for example, `monitoring_stack/`), create the followi
 ### What Is Prometheus?
 
 <!-- prettier-ignore -->
-> [Prometheus](https://github.com/prometheus) is an open-source systems monitoring and alerting toolkit originally built at [SoundCloud](http://soundcloud.com). Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user [community](/community/). It is now a standalone open source project and maintained independently of any company. To emphasize this, and to clarify the project's governance structure, Prometheus joined the [Cloud Native Computing Foundation](https://cncf.io/) in 2016 as the second hosted project, after [Kubernetes](http://kubernetes.io/).  
+> [Prometheus](https://github.com/prometheus) is an open-source systems monitoring and alerting toolkit originally built at [SoundCloud](http://soundcloud.com/). Since its inception in 2012, many companies and organizations have adopted Prometheus, and the project has a very active developer and user [community](https://prometheus.io/community/). It is now a standalone open source project and maintained independently of any company. To emphasize this, and to clarify the project's governance structure, Prometheus joined the [Cloud Native Computing Foundation](https://cncf.io/) in 2016 as the second hosted project, after [Kubernetes](http://kubernetes.io/).  
 {cite="https://prometheus.io/docs/introduction/overview/" caption="Prometheus Documentation: Overview"}
 
 ---
@@ -83,7 +82,7 @@ In your working directory (for example, `monitoring_stack/`), create the followi
 
 Prometheus **pulls metrics** from [**exporters**](https://prometheus.io/docs/instrumenting/exporters/) which are servers, containers, or apps that expose data via the `/metrics` endpoint. These metrics are stored in a **time-series database (TSDB)** for queries and alerts.
 
-You can explore data with [**PromQL**](https://prometheus.io/docs/prometheus/latest/querying/basics/), visualize it in **Grafana**, and send **alerts** using Alertmanager.
+You can explore data with [**PromQL**](https://prometheus.io/docs/prometheus/latest/querying/basics/), visualize it in **Grafana**, and send alerts using [**Alertmanager**](https://prometheus.io/docs/alerting/latest/alertmanager/).
 
 It tracks metrics such as:
 
@@ -114,6 +113,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
     depends_on:
       - cadvisor
 
@@ -123,6 +123,12 @@ services:
 networks:
   monitoring:
     driver: bridge
+
+# ===========================
+# Volumes
+# ===========================
+volumes:
+  prometheus_data: {}
 ```
 
 ---
@@ -320,6 +326,7 @@ services:
 # Volumes
 # ===========================
 volumes:
+  prometheus_data: {}
   grafana_storage: {}
 ```
 
@@ -327,14 +334,14 @@ volumes:
 
 ### Configuration Breakdown
 
-| Key                         | Description                                                                                                                                                |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **image**                   | Uses the official Grafana image from Docker Hub.                                                                                                           |
-| **environment**             | Loads admin credentials from the `.env` file and disables new user sign-ups for security.                                                                  |
-| **ports**                   | Maps Grafana’s default port (`3000`) so it’s accessible at [localhost:3000](http://localhost:3000).                                                        |
-| **volumes**                 | - `grafana_storage` persists dashboards and settings.<br> - `./grafana/provisioning` mounts preconfigured data source & dashboard files in read-only mode. |
-| **restart: unless-stopped** | Ensures Grafana restarts automatically unless manually stopped.                                                                                            |
-| **networks: monitoring**    | Lets Grafana communicate with Prometheus and cAdvisor containers.                                                                                          |
+| Key                         | Description                                                                                                                                        |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **image**                   | Uses the official Grafana image from Docker Hub.                                                                                                   |
+| **environment**             | Loads admin credentials from the `.env` file and disables new user sign-ups for security.                                                          |
+| **ports**                   | Maps Grafana’s default port (`3000`) so it’s accessible at [localhost:3000](http://localhost:3000).                                                |
+| **volumes**                 | `grafana_storage` persists dashboards and settings. `./grafana/provisioning` mounts preconfigured data source & dashboard files in read-only mode. |
+| **restart: unless-stopped** | Ensures Grafana restarts automatically unless manually stopped.                                                                                    |
+| **networks: monitoring**    | Lets Grafana communicate with Prometheus and cAdvisor containers.                                                                                  |
 
 ---
 
@@ -345,6 +352,7 @@ Before starting the containers, we’ll configure the `.env` file — which stor
 Create a file named **`.env`** in your project’s root directory and add:
 
 ```bash
+# Grafana credentials
 GRAFANA_USER=admin
 GRAFANA_PASSWORD=supersecret
 ```
@@ -369,7 +377,7 @@ This will:
 - Start **Prometheus** (storing and scraping metrics)
 - Start **Grafana** (visualizing them beautifully, using your `.env` credentials)
 
-Then open:
+Then wait a few seconds until grafana loads, and open:
 **[localhost:3000](http://localhost:3000)**
 
 Log in using your `.env` credentials and you’ll find Grafana **already connected to Prometheus**, displaying live metrics from your Docker containers
@@ -454,7 +462,7 @@ services:
     container_name: db
     restart: always
     volumes:
-      - ./db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
@@ -485,6 +493,10 @@ services:
 # ===========================
 # Volumes
 # ===========================
+volumes:
+  prometheus_data: {}
+  grafana_storage: {}
+  mysql_data: {}
 ```
 
 ### Configuration Breakdown
@@ -494,7 +506,7 @@ services:
 | **image**          | Uses the official MySQL image from Docker Hub.                                                                                          |
 | **container_name** | Names the container `db` for easy reference.                                                                                            |
 | **restart**        | Automatically restarts if it stops unexpectedly.                                                                                        |
-| **volumes**        | Persists data locally in the `db_data` folder.                                                                                          |
+| **volumes**        | Persists data in the `mysql_data` folder.                                                                                               |
 | **environment**    | Loads credentials from the `.env` file.                                                                                                 |
 | **ports**          | Exposes MySQL on port `3306`.                                                                                                           |
 | **networks**       | Connects this container to both: `monitoring` → visible in the monitoring stack, and `application` → for app-to-database communication. |
