@@ -96,7 +96,7 @@ It tracks metrics such as:
 
 ### Prometheus in `compose.yml`
 
-The first thing we need to do is define the **Prometheus service** in our `compose.yml` file:
+Let's create a `compose.yml` file in our working directory and define the **Prometheus service** within it.
 
 ```yaml
 services:
@@ -211,17 +211,18 @@ services:
 ### Adding cAdvisor as a Prometheus Target
 
 In order for Prometheus to start scraping metrics from cAdvisor, we need to add it as a **scrape target** in the `prometheus.yml` file:
+Create a `prometheus.yml` file in your project root (next to `compose.yml`) and add the following configuration.
 
 ```yaml
 # ===========================
 # Prometheus Scrape Config
 # ===========================
 scrape_configs:
-  - job_name: cadvisor # Label for this scrape job
-    scrape_interval: 5s # How often to collect metrics
+  - job_name: cadvisor
+    scrape_interval: 5s
     static_configs:
       - targets:
-          - cadvisor:8080 # cAdvisor service endpoint
+          - cadvisor:8080
 ```
 
 > [!NOTE]
@@ -245,8 +246,8 @@ After saving, we can now launch both Prometheus and cAdvisor together:
 docker compose up -d
 ```
 
-Access Prometheus → [localhost:9090](http://localhost:9090)
-Access cAdvisor → [localhost:8080](http://localhost:8080)
+- Access Prometheus → [localhost:9090](http://localhost:9090)
+- Access cAdvisor → [localhost:8080](http://localhost:8080)
 
 Prometheus will now start collecting container metrics — ready to be visualized in Grafana.
 
