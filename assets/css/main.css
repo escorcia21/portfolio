@@ -268,4 +268,8 @@
     .medium-zoom-image--opened {
         z-index: 999;
     }
+
+    .text-active {
+        color: theme('colors.font-accent') !important;
+    }
 }
