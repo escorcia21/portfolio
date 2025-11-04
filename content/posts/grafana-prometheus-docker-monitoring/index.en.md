@@ -251,6 +251,9 @@ docker compose up -d
 
 Prometheus will now start collecting container metrics — ready to be visualized in Grafana.
 
+> [!NOTE]
+> after adding new services such as MySQL, refresh Grafana so it can pick up metrics from the newly started containers, this can be done by either clicking the dashboard's Reload button (top-right) or reloading the browser page.
+
 ---
 
 ## Service 3: Grafana
@@ -659,7 +662,7 @@ Open your browser and visit:
 
 **[localhost/todos](http://localhost/todos)**
 
-You should see your **Rails Todo app** running successfully! 🙌
+You should see your **Rails Todo app** running successfully!
 
 In the grafana dashboard at **[localhost:3000](http://localhost:3000)**, you can now monitor the performance of your Docker containers, including the Rails app and MySQL database.
 
