@@ -35,51 +35,55 @@
           </a>
         </li>
       {{ end }}
-    </ul>
-    <!-- Language Switcher - Mobile -->
-    <div class="group hidden md:inline-block">
-      <!-- Switcher button -->
-      <div class="flex items-center gap-1 p-2 cursor-pointer">
-        ~/{{ .Language.Lang | upper }}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-4 h-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
+      <!-- Language Switcher - Mobile -->
+      <div class="inline" id="lang-switcher">
+        <!-- Switcher button -->
+        <div
+          id="lang-button"
+          class="flex items-center gap-1 p-2 cursor-pointer select-none"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m6 9 6 6 6-6"
-          />
-        </svg>
-      </div>
-
-      <!-- Dropdown menu -->
-      <div
-        class="absolute hidden group-hover:block shadow-lg bg-primary border-2 border-gray-500/20 rounded-lg min-w-[120px] z-10"
-      >
-        {{ range .Site.Languages }}
-          {{ $translation := "" }}
-          {{ $foundTranslationsMobile := where $.Page.Translations "Lang" .Lang }}
-          {{ if $foundTranslationsMobile }}
-            {{ $translation = index $foundTranslationsMobile 0 }}
-          {{ end }}
-          {{ $isCurrentLang := eq .Lang $.Language.Lang }}
-          <a
-            href="{{ if $translation }}
-              {{ $translation.Permalink }}
-            {{ else }}
-              {{ .Lang | absLangURL }}
-            {{ end }}"
-            class="block px-4 py-3 transition-colors duration-200 font-bold hover:bg-primary-dark/30"
+          ~/{{ .Language.Lang | upper }}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
           >
-            {{ .LanguageName }}
-          </a>
-        {{ end }}
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m6 9 6 6 6-6"
+            />
+          </svg>
+        </div>
+
+        <!-- Dropdown menu -->
+        <div
+          id="lang-menu"
+          class="absolute -translate-x-12 [@media(min-width:1400px)]:translate-x-0 hidden shadow-lg bg-primary border-2 border-gray-500/20 rounded-lg z-10"
+        >
+          {{ range .Site.Languages }}
+            {{ $translation := "" }}
+            {{ $foundTranslationsMobile := where $.Page.Translations "Lang" .Lang }}
+            {{ if $foundTranslationsMobile }}
+              {{ $translation = index $foundTranslationsMobile 0 }}
+            {{ end }}
+            {{ $isCurrentLang := eq .Lang $.Language.Lang }}
+            <a
+              href="{{ if $translation }}
+                {{ $translation.Permalink }}
+              {{ else }}
+                {{ .Lang | absLangURL }}
+              {{ end }}"
+              class="block px-4 py-3 transition-colors duration-200 font-bold hover:bg-primary-dark/30"
+            >
+              {{ .LanguageName }}
+            </a>
+          {{ end }}
+        </div>
       </div>
-    </div>
+    </ul>
   </nav>
 </div>
