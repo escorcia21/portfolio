@@ -31,10 +31,6 @@ icon = "devicon-objectivec-plain"
 name = "Objective-C"
 
 [[technologies]]
-icon = "devicon-go-original-wordmark"
-name = "Golang"
-
-[[technologies]]
 icon = "devicon-tailwindcss-plain"
 name = "Tailwind CSS"
 

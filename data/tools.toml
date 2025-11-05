@@ -40,11 +40,6 @@ path = "gemini.svg"
 svg = true
 
 [[tools]]
-name = "Anthropic"
-path = "anthropic.svg"
-svg = true
-
-[[tools]]
 name = "Deepseek"
 path = "deepseek.svg"
 svg = true
