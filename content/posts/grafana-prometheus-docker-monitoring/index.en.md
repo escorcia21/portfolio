@@ -40,6 +40,10 @@ In the second part, we’ll take it a step further by integrating server logs di
 
 ---
 
+> [!NOTE]
+> **Prerequisite:**
+> Before continuing, ensure that you have Docker installed on your machine. You can follow the official installation guide for your platform here: [Install Docker Engine](https://docs.docker.com/engine/install/)
+
 Now that you know what you’ll learn, let’s look at what you’ll actually build and the components that make up your monitoring stack.
 
 ---
