@@ -18,6 +18,7 @@
     <footer class="shrink-0 bg-linear-to-b to-primary-dark">
       {{ partial "footer.html" . }}
     </footer>
+
     {{ if .Store.Get "hasMermaid" }}
       <script type="module">
         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs";
@@ -34,7 +35,7 @@
       </script>
     {{ end }}
 
-    {{ if or (.Content | findRE "<img") (.Resources.ByType "image") }}
+    {{ if .Store.Get "hasImages" }}
       <script type="module">
         import { default as mediumZoom } from "https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.esm.min.js";
 
@@ -45,7 +46,14 @@
       </script>
     {{ end }}
 
-    {{ $tocHighlighter := resources.Get "js/toc-highlighter.js" | js.Build (dict "minify" true) }}
-    <script src="{{ $tocHighlighter.RelPermalink }}" defer></script>
+    {{ if .Store.Get "hasToc" }}
+      {{ $tocHighlighter := resources.Get "js/toc-highlighter.js" | js.Build (dict "minify" true) }}
+      <script src="{{ $tocHighlighter.RelPermalink }}" defer></script>
+    {{ end }}
+
+    {{ if .Store.Get "hasCode" }}
+      {{ $clipboardJs := resources.Get "js/clipboard.js" | js.Build (dict "minify" true) }}
+      <script src="{{ $clipboardJs.RelPermalink }}" defer></script>
+    {{ end }}
   </body>
 </html>

@@ -1,4 +1,3 @@
-{{/* render-hook: terminal style code block */}}
 {{ $result := transform.HighlightCodeBlock . }}
 <div
   class="my-6 rounded-lg overflow-hidden font-mono bg-primary-dark text-font-accent relative"
@@ -25,9 +24,19 @@
       class="copy-btn flex items-center gap-1 text-font-accent hover:cursor-pointer focus:outline-none"
       aria-label="Copy code"
     >
-      {{ $svg := resources.Get (printf "icons/%s" "clipboard.svg" ) | resources.ExecuteAsTemplate "clipboard.svg" . }}
-      {{ $svg.Content | safeHTML }}
-      <span class="text-xs">Copy</span>
+      <!-- Clipboard Icon (default) -->
+      {{ $clipboard := resources.Get "icons/clipboard.svg" | resources.ExecuteAsTemplate "clipboard.svg" . }}
+      <span class="icon-clipboard transition-opacity duration-200 opacity-100">
+        {{ $clipboard.Content | safeHTML }}
+      </span>
+
+      <!-- Clipboard Success Icon (hidden initially) -->
+      {{ $clipboardSuccess := resources.Get "icons/clipboard_success.svg" | resources.ExecuteAsTemplate "clipboard_success.svg" . }}
+      <span
+        class="icon-clipboard-success transition-opacity duration-200 opacity-0 absolute"
+      >
+        {{ $clipboardSuccess.Content | safeHTML }}
+      </span>
     </button>
   </div>
   <!-- Code content -->
@@ -35,3 +44,4 @@
     class="p-4 overflow-x-auto m-0! terminal-code-scrollbar bg-primary-dark"
   ><code>{{ $result.Inner | safeHTML }}</code></pre>
 </div>
+{{ .Page.Store.Set "hasCode" true }}
