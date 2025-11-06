@@ -277,8 +277,6 @@ To make setup easier, we’ll clone a repository that already contains the **Gra
 - The **data source configuration**, so Grafana automatically connects to Prometheus.
 - The **default dashboard**, so we can see our container metrics without manually creating panels.
 
-Here’s your text rewritten as a clear, polished **information section** in Markdown style (perfect for tutorials or docs):
-
 > [!NOTE]
 > For this tutorial, I imported a **pre-configured Grafana dashboard** that visualizes Docker container metrics collected by Prometheus.
 > You can check it out here: [Docker Host & Container Overview Dashboard (ID: 10619)](https://grafana.com/grafana/dashboards/10619-docker-host-container-overview/)
@@ -674,9 +672,7 @@ This will:
 - Start MySQL, Prometheus, cAdvisor, and Grafana
 - Connect everything through the proper networks
 
-Open your browser and visit:
-
-**[localhost/todos](http://localhost/todos)**
+Open your browser and visit: **[localhost/todos](http://localhost/todos)**
 
 You should see your **Rails Todo app** running successfully!
 
@@ -702,7 +698,7 @@ architecture-beta
     service grafana(logos:grafana)[Dashboard] in monitoring
 
     service mysql(logos:mysql)[Database] in application
-    service rails(logos:ruby)[Backend] in application
+    service rails(logos:ruby)[ToDo App] in application
 
     mysql:T -- B:rails
 
