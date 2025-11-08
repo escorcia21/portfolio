@@ -24,11 +24,11 @@ defaultContentLanguage = "en"
     [[languages.en.menu.header]]
       name = "about"
       weight = 2
-      url = "/"
+      url = ""
     [[languages.en.menu.header]]
       name = "rss"
       weight = 3
-      url = "/index.xml"
+      url = "index.xml"
 
   [languages.es.menu]
     [[languages.es.menu.header]]
@@ -38,11 +38,11 @@ defaultContentLanguage = "en"
     [[languages.es.menu.header]]
       name = "acerca_de"
       weight = 2
-      url = "/"
+      url = ""
     [[languages.es.menu.header]]
       name = "rss"
       weight = 3
-      url = "/index.xml"
+      url = "index.xml"
 
 [build]
   [build.buildStats]
