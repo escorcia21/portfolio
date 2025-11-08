@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const block = btn.parentElement.parentElement.querySelector("pre code");
             if (!block) return;
 
-            const codeText = block.innerText;
+            const codeText = block.textContent;
 
             try {
                 await navigator.clipboard.writeText(codeText);
