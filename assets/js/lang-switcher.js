@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", (e) => {
       e.stopPropagation();
 
-      if (menu.contains("hidden")) {
+      if (menu.classList.contains("hidden")) {
         menu.classList.remove("hidden");
         return;
       }
 
-      if (!menu.contains("hidden")) menu.classList.add("hidden");
+      if (!menu.classList.contains("hidden")) menu.classList.add("hidden");
     });
 
     document.addEventListener("click", (e) => {
