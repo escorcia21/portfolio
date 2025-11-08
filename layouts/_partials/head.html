@@ -6,8 +6,8 @@
 />
 
 {{ with .Site.Params.favicon }}
-  <link rel="icon" href="{{ . | absURL }}" type="image/svg+xml" />
-  <link rel="shortcut icon" href="{{ . | absURL }}" type="image/x-icon" />
+  <link rel="icon" href="{{ . | relURL }}" type="image/svg+xml" />
+  <link rel="shortcut icon" href="{{ . | relURL }}" type="image/x-icon" />
 {{ end }}
 
 
