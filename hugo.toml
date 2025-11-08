@@ -1,4 +1,4 @@
-baseURL = 'https://portfolio.carlosescorcia21.workers.dev/'
+baseURL = 'https://escorcia21.github.io/portfolio/'
 title = 'Carlos Escorcia'
 defaultContentLanguage = "en"
 
@@ -73,6 +73,10 @@ defaultContentLanguage = "en"
         block = true
         title = true
     
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
 [outputs]
 home = ['html', 'rss']
 section = ['html']
