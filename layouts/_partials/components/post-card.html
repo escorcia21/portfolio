@@ -32,9 +32,9 @@
       <ul class="flex flex-wrap gap-2">
         {{ range . }}
           {{ $tag := . }}
-          {{ $href := printf "/tags/%s/" (urlize $tag) }}
+          {{ $href := printf "tags/%s/" $tag }}
           <li>
-            {{ partial "components/chip-text.html" (dict "href" $href "text" $tag) }}
+            {{ partial "components/chip-text.html" (dict "href" ($href | absURL) "text" $tag ) }}
           </li>
         {{ end }}
       </ul>

@@ -1,6 +1,6 @@
 <dt class="m-0! p-0!">{{ T "tags" }}:</dt>
 <dd class="m-0! p-0!">
   {{- range $index, $el := . -}}
-    {{ partial "components/chip-text.html" (dict "href" .RelPermalink "text" .LinkTitle ) }}
+    {{ partial "components/chip-text.html" (dict "href" .Permalink "text" .LinkTitle ) }}
   {{- end -}}
 </dd>
