@@ -27,7 +27,7 @@
         <li class="m-1 inline">
           <a
             class="no-underline animated-link text-white!"
-            href="{{ .URL | absLangURL }}"
+            href="{{ .URL | relLangURL }}"
             title="{{ .Title }}"
             {{ if in .URL "index.xml" }}target="_blank" rel="noopener"{{ end }}
           >
@@ -73,9 +73,9 @@
             {{ $isCurrentLang := eq .Lang $.Language.Lang }}
             <a
               href="{{ if $translation }}
-                {{ $translation.Permalink }}
+                {{ $translation.RelPermalink }}
               {{ else }}
-                {{ .Lang | absLangURL }}
+                {{ .Lang | relLangURL }}
               {{ end }}"
               class="block px-4 py-3 transition-colors duration-200 font-bold hover:bg-primary-dark/30"
             >

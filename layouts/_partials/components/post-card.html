@@ -34,7 +34,7 @@
           {{ $tag := . }}
           {{ $href := printf "tags/%s/" $tag }}
           <li>
-            {{ partial "components/chip-text.html" (dict "href" ($href | absURL) "text" $tag ) }}
+            {{ partial "components/chip-text.html" (dict "href" ($href | relURL) "text" $tag ) }}
           </li>
         {{ end }}
       </ul>
