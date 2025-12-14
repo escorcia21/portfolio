@@ -240,7 +240,7 @@ schema_config:
     - from: 2020-05-15
       store: tsdb
       object_store: filesystem
-      schema: v14
+      schema: v13
       index:
         prefix: index_
         period: 24h
